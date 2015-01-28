@@ -1,0 +1,6 @@
+Result for Test Case 1 with input(s) : 3 
+
+Result for Test Case 2 with input(s) : 6 
+
+Result for Test Case 3 with input(s) : 7 
+

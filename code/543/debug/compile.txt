@@ -1,0 +1,7 @@
+../code/543/5.java:2: error: class, interface, or enum expected
+public static void main (String[] arg){
+              ^
+../code/543/5.java:4: error: class, interface, or enum expected
+}
+^
+2 errors

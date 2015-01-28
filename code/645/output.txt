@@ -1,0 +1,12 @@
+Result for Test Case 1 with input(s) : 1321 
+
+4
+Result for Test Case 2 with input(s) : 21312321 
+
+54
+Result for Test Case 3 with input(s) : 99 
+
+63
+Result for Test Case 4 with input(s) : 880 
+
+58

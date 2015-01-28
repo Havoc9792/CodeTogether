@@ -1,0 +1,4 @@
+../code/0/1.java:1: error: reached end of file while parsing
+imporat
+^
+1 error
