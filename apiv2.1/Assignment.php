@@ -1,5 +1,4 @@
 <?php
-//comment
 require_once 'File.php';
 class Assignment{
 	

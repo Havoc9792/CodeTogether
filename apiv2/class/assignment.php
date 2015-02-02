@@ -130,6 +130,40 @@ class assignment extends mysql{
 	    }
     }
     
+    public function runAgainstTestCase($group_id){
+		if(isset($group_id)){
+		$path = "/var/www/html2/code";
+		$folder = "/var/www/html2/code/".$_POST['group_id'];
+		$testcases = "/var/www/html2/code/".$_POST['group_id']."/testcases";
+			if(file_exists($file)){
+				$this->rrmdir($file);
+			}
+			mkdir($file);
+			$sql = "SELECT * FROM assignment_testcase AT JOIN assignment_group as AG ON AG.assignment_id = AT.assignment_id where AG.group_id = '{$group_id}'";
+			$result = $this->query($sql);
+			while($row = $result->fetch_assoc()){
+				file_put_contents($testcases . "/inputs.txt", $row['input']);	
+				file_put_contents($testcases . "/output.txt", $row['output']);	
+				file_put_contents($testcases . "/comment.txt", $row['comment']);	
+				file_put_contents($testcases . "/description.txt", $row['description']);
+					
+			
+			}	
+				$command = "sh $path/mainClass.sh $folder";
+				$output = shell_exec($command);
+				$output = explode("@@@@@@@@@@", $output);
+				$output = $output[1];
+				if($output == ""){
+					echo "Error: Cannot find Java Main Class<br />";
+					}
+
+				$output = explode("/", $output);
+				$output = $output[sizeof($output)-1];
+				$commandRun = "sh $path/testcase.sh '$folder' '$output' '$comment' '$description' ";
+				$run = shell_exec($commandRun);
+			
+		}
+    }
     /*Depreciated
     public function testAssignment($group_id,$inputs){
 	    if(isset($group_id) && isset($inputs)){
