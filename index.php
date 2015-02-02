@@ -33,7 +33,11 @@ $router->map('GET', '/assignment/edit/testcase/[i:assignment_id]/', 'View::rende
 $router->map('GET', '/statistics/[i:assignment_id]/', 'View::render#Assignment_Statistics', 'assignment_stat');
 $router->map('GET', '/statistics/[i:assignment_id]/group/[i:group_id]/', 'View::render#Assignment_Group_Statistics', 'assignment_group_stat');
 
+//Assignment Do
+$router->map('GET', '/assignment/do/[i:assignment_id]/', 'View::render#Assignment_Do', 'assignment_do');
+
 //Assignment Do Page
+/*
 $router->map('GET', '/assignment/do/[i:assignment_id]/', function($assignment_id){
 	global $api_folder, $config, $router;
 	user::authService();
@@ -54,6 +58,7 @@ $router->map('GET', '/assignment/do/[i:assignment_id]/', function($assignment_id
 	require __DIR__ . '/views/footer.php';
 	
 }, 'assignment_do');
+*/
 
 
 

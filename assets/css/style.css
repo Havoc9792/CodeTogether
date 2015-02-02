@@ -1,5 +1,15 @@
-/*
+i.danger{
+	color: #F55753 !important;
+}
 
-* Override Pages default styles or create your own styles here
+i.info{
+	color: #6D5CAE !important;
+}
 
-*/
+i.warning{
+	color: #F8D053 !important;	
+}
+
+i.success{
+	color: #10CFBD !important;
+}

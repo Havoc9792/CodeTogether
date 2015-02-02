@@ -22,6 +22,16 @@ class View{
 		require dirname(__DIR__) . '/views/header.php';
 		
 		switch($part){
+			
+			case "Assignment_Do":
+				$assignment_id = $param1;	
+				$config['assignment_do'] = true;
+				require_once __DIR__ . '/Assignment.php';
+				require_once __DIR__ . '/Testcase.php';			
+				if(user::isStudent()){		
+					require dirname(__DIR__) . '/views/student-assignment-do.php';
+				}			
+				break;
 					
 			
 			case "Course":				
@@ -96,11 +106,7 @@ class View{
 				}			
 				break;										
 								
-		}
-		
-		?>
-		<p style="position: fixed; bottom: 0; right: 10px; z-index: 10000; background: #FFF; color: red; font-size: 20px">This page is currently using <b>New</b> apiv2.1 (msg from Hei)</p>
-		<?php		
+		}					
 		
 		require dirname(__DIR__) . '/views/footer.php';
 		

@@ -1,7 +1,5 @@
 <?php
-//require_once dirname(__DIR__) . "/apiv2.1/Testcase.php";	
-//$testcaseAPI = new Testcase();
-//var_dump($testcaseAPI->get($assignmentAPI->info['assignment_id']));
+$testcaseAPI = new Testcase();
 ?>
 
 <div class="panel panel-transparent">	
@@ -16,11 +14,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr data-testcase-id="1">
-						<td class="v-align-middle semi-bold">1</td>
-						<td class="v-align-middle">Logic Error</td>
+					<?php
+					foreach($testcaseAPI->get($assignment_id, false) as $testcase):	
+					?>
+					<tr data-testcase-id="<?= $testcase['testcase_id'] ?>">
+						<td class="v-align-middle semi-bold"><?= $testcase['testcase_id'] ?></td>
+						<td class="v-align-middle"><?= $testcase['type'] ?></td>
 						<td class="indicator v-align-middle semi-bold"><i class="fa fa-circle-o-notch fa-spin info"></i></td>						
-					</tr>	
+					</tr>
+					<?php
+					endforeach;	
+					?>	
 					
 					<tr data-testcase-id="2">
 						<td class="v-align-middle semi-bold">1</td>

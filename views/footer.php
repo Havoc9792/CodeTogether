@@ -75,6 +75,7 @@
     <!-- END PAGE LEVEL JS -->
         
 	<script>
+		
     var group_id = <?= isset($assignment['group_id']) ? $assignment['group_id'] : ( isset($group_id) ? $group_id : 0 )  ?>;
     var assignment_id = <?= isset($assignment) ? $assignment['assignment_id'] : 0 ?>;
 
@@ -134,6 +135,7 @@
 		<script src="/js/assignment-do/drawing.js"></script>
 		<script src="/js/assignment-do/chat.js"></script>
 		<script src="/js/assignment-do/videochat.js"></script>
+		<script src="/js/assignment-do/testcase.js"></script>
 			
 		<script src="/js/assignment-do/history.js"></script>
 		
@@ -141,7 +143,7 @@
 			
 
 		<script>
-		var pymParent = new pym.Parent('doc', 'https://docs.oracle.com/javase/8/docs/api/index.html', { xdomain: 'docs.oracle.com' });				
+		//var pymParent = new pym.Parent('doc', 'https://docs.oracle.com/javase/8/docs/api/index.html', { xdomain: 'docs.oracle.com' });				
 		</script>
 				
 		

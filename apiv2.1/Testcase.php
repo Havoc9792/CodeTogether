@@ -48,12 +48,17 @@ class Testcase{
 	}
 	
 	
-	public function get($assignment_id){
+	public function get($assignment_id, $json = true){
 		global $db;		
 				
 		$db->where('assignment_id', $assignment_id);
 		$result = $db->get('assignment_testcase');
-		echo json_encode($result, TRUE);
+		if($json){
+			echo json_encode($result, TRUE);
+		}else{
+			return $result;
+		}
 	}
+		
     
 }

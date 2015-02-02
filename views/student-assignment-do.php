@@ -1,8 +1,10 @@
 <?php
-$assignmentAPI = new assignment($assignment_id);
-$course_id = $assignmentAPI->info['course_id'];
+$assignmentAPI = new Assignment($assignment_id);
+$assignment = $assignmentAPI->info();
+
+$course_id = $assignment['course_id'];
 $courseAPI = new course($course_id);
-$course = $courseAPI->info;	
+$course = $courseAPI->info();
 ?>
 
 <style>
@@ -85,7 +87,7 @@ canvas:active{
 					<div class="navbar navbar-default navbar-sm">
 						<div class="navbar-inner">
 						<?php
-		                foreach($assignmentAPI->info['files'] as $file):
+		                foreach($assignment['files'] as $file):
 		                    if(in_array($file['extension'], file::$viewerJSSupportedExtension  )):
 		                ?>
 							
@@ -259,7 +261,7 @@ canvas:active{
 							</li>		
 							<?php	
 							$i=0;						
-							foreach($assignmentAPI->info['editor'] as $editor){
+							foreach($assignment['editor'] as $editor){
 								?>
 								
 								<li class="<?= $i==0 ? "active" : "" ?>">
@@ -274,7 +276,7 @@ canvas:active{
 						<div class="tab-content no-padding no-margin">							
 							<?php	
 							$i=0;						
-							foreach($assignmentAPI->info['editor'] as $editor){
+							foreach($assignment['editor'] as $editor){
 								?>
 								
 								<div class="tab-pane <?= $i==0 ? "active" : "fade" ?>" id="tab<?= $editor['editor'] ?>">

@@ -88,9 +88,9 @@ class Assignment{
 	
 	
     public function getEditor($group_id){
-	    global $db;
+	    global $db;	    
 	    $db->where("group_id", $group_id);
-	    $editors = $db->get("assignment_group_code", "editor, code");	    
+	    $editors = $db->get("assignment_group_code", null, 'editor, code');	    	    
 	    return $editors;
     }	
 	
@@ -170,13 +170,11 @@ class Assignment{
                 $files[] = $rowFile;
         }
         $result['files'] = $files;
-
-		
+				
 
         if(user::isStudent() ){
-	        $row['group_id'] = Assignment::groupID($assignment_id);
-	        $row['editor'] = Assignment::getEditor($row['group_id']);
-	        
+	        $result['group_id'] = Assignment::groupID($assignment_id);	        	        	        
+	        $result['editor'] = Assignment::getEditor($result['group_id']);	        	        	        
         }elseif(user::isTeacher() ){
 	        $db->where("assignment_id", $assignment_id);
 	        $result2 = $db->get("assignment_group", "COUNT(*) as group_count")[0];						

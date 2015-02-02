@@ -15,6 +15,7 @@
     <meta content="" name="description" />
     <meta content="" name="author" />
      <!-- BEGIN Vendor CSS-->
+     <link href="/assets/plugins/animate.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" />
     <link href="/assets/plugins/boostrapv3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="/assets/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
@@ -31,6 +32,8 @@
     <!--[if lte IE 9]>
         <link href="/pages/css/ie9.css" rel="stylesheet" type="text/css" />
     <![endif]-->
+    
+    <link class="main-stylesheet" href="/assets/css/style.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript">
     window.onload = function() {
