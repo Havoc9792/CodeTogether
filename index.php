@@ -82,7 +82,7 @@ $match = $router->match();
 if($match && is_callable( $match['target'] ) ) {
 	
 		?>
-		<p style="position: fixed; bottom: 0; right: 10px; z-index: 10000; background: #FFF; color: blue; font-size: 20px">This page is currently using <b>OLD</b> apiv2 (msg from Hei)</p>
+		<p style="position: fixed; bottom: 0; left: 10px; z-index: 10000; background: #FFF; color: blue; font-size: 20px">This page is currently using <b>OLD</b> apiv2 (msg from Hei)</p>
 		<?php		
 	call_user_func_array( $match['target'], $match['params'] ); 
 	

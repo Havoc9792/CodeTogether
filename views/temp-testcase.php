@@ -1,0 +1,46 @@
+<?php
+//require_once dirname(__DIR__) . "/apiv2.1/Testcase.php";	
+//$testcaseAPI = new Testcase();
+//var_dump($testcaseAPI->get($assignmentAPI->info['assignment_id']));
+?>
+
+<div class="panel panel-transparent">	
+	<div class="panel-body no-padding">
+		<div class="table-responsive">
+			<table class="table table-hover table-condensed" id="">
+				<thead>
+					<tr>
+						<th style="width:30%">Testcase</th>
+						<th style="width:50%">Type</th>
+						<th style="width:20%"><i class="fa fa-gear"></i></th>						
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-testcase-id="1">
+						<td class="v-align-middle semi-bold">1</td>
+						<td class="v-align-middle">Logic Error</td>
+						<td class="indicator v-align-middle semi-bold"><i class="fa fa-circle-o-notch fa-spin info"></i></td>						
+					</tr>	
+					
+					<tr data-testcase-id="2">
+						<td class="v-align-middle semi-bold">1</td>
+						<td class="v-align-middle">Logic Error</td>
+						<td class="indicator v-align-middle semi-bold"><i class="fa fa-check-circle success"></i></td>						
+					</tr>
+					
+					<tr data-testcase-id="3">
+						<td class="v-align-middle semi-bold">1</td>
+						<td class="v-align-middle">Logic Error</td>
+						<td class="indicator v-align-middle semi-bold"><i class="fa fa-exclamation-triangle warning"></i></td>						
+					</tr>	
+					
+					<tr data-testcase-id="4">
+						<td class="v-align-middle semi-bold">1</td>
+						<td class="v-align-middle">Logic Error</td>
+						<td class="indicator v-align-middle semi-bold"><i class="fa fa-times-circle danger"></i></td>						
+					</tr>																		
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
