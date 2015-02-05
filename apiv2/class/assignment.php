@@ -139,28 +139,56 @@ class assignment extends mysql{
 				$this->rrmdir($file);
 			}
 			mkdir($file);
-			$sql = "SELECT * FROM assignment_testcase AT JOIN assignment_group as AG ON AG.assignment_id = AT.assignment_id where AG.group_id = '{$group_id}'";
+			$sql = "SELECT * FROM assignment_testcase AT JOIN assignment_group as AG ON AG.assignment_id = AT.assignment_id where AG.group_id = '{$group_id}'"
 			$result = $this->query($sql);
+			$inputs = array();
+			$expectedOutputs = array();
+			$comments = array();
+			$descriptions = array();
+			$ids = array();
+			$counter = 0;
 			while($row = $result->fetch_assoc()){
-				file_put_contents($testcases . "/inputs.txt", $row['input']);	
-				file_put_contents($testcases . "/output.txt", $row['output']);	
-				file_put_contents($testcases . "/comment.txt", $row['comment']);	
-				file_put_contents($testcases . "/description.txt", $row['description']);
-					
+				$inputs[] = $row['input'];
+				$expectedOutputs[] = $row['output'];
+				$comments[] = $row['comment'];
+				$descriptions[] = $row['description'];
+				$ids[] = $row['testcase_id'];
+				//file_put_contents($testcases . "/inputs.txt", $row['input']);	
+				//file_put_contents($testcases . "/output.txt", $row['output']);	
+				//file_put_contents($testcases . "/comment.txt", $row['comment']);	
+				//file_put_contents($testcases . "/description.txt", $row['description']);
 			
 			}	
+			
 				$command = "sh $path/mainClass.sh $folder";
-				$output = shell_exec($command);
-				$output = explode("@@@@@@@@@@", $output);
-				$output = $output[1];
-				if($output == ""){
+				$mainClass = shell_exec($command);
+				$mainClass = explode("@@@@@@@@@@", $output);
+				$mainClass = $output[1];
+				if($mainClass == ""){
 					echo "Error: Cannot find Java Main Class<br />";
 					}
-
-				$output = explode("/", $output);
-				$output = $output[sizeof($output)-1];
-				$commandRun = "sh $path/testcase.sh '$folder' '$output' '$comment' '$description' ";
-				$run = shell_exec($commandRun);
+				$mainClass = explode("/", $output);
+				$mainClass = $output[sizeof($output)-1];
+				$testcaseResults = array();
+				foreach($inputs as $input){
+					$temp = $expectedOutputs[$counter];
+					$commandRun = "sh $path/testcase.sh '$folder' '$mainClass' '$input' '$temp' ";
+					$run = shell_exec($commandRun);
+					switch($run){
+						case "TIMEOUT":
+							$testcaseResults[] = array('id' => $ids[$counter],'resultType' => "TIMEOUT");
+						break;
+						case "PASS":
+							$testcaseResults[] = array('id' => $ids[$counter],'resultType' => "PASS");
+						break;
+						case "FAIL":
+							$testcaseResults[] = array('id' => $ids[$counter],'resultType' => "FAIL");
+						break;
+						
+					}
+					$counter++;
+				}
+				return json_encode($testcaseResults);
 			
 		}
     }
