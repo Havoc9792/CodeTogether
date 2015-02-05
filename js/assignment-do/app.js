@@ -40,15 +40,27 @@ var saveCode = function(group_id){
 							var arr = JSON.parse(res);
 							if(arr.resultType == "1"){	                        
 								socket.emit("msg", {group_id: group_id, name: user_name, user_id: user_id, action: 'running-error'});
-								terminalOutput("Running Exception!...");	
-								
+								terminalOutput("Running Exception!...");
+							                        		
+								terminalOutput(arr.content);
+								terminalOutput("THIS LINE INDICATES THE END...");
+								/*
+								$.post("/apiv2/run-aggainst-testcase.php", {group_id: group_id},function(res){
+									var testcaseArray = JSON.parse(res);
+									//$.each(testcaseArray,function(key,value){
+										//terminalOuput("Test Case ID : "value.id + " Result : " + value.resultType);
+									//});
+										//terminalOuput(testcaseArray);
+								});
+								terminalOutput("THIS LINE INDICATES THE END OF RUN-AGAINST-TESTCASES...");	
+								*/
 							}else{	                        
 								socket.emit("msg", {group_id: group_id, name: user_name, user_id: user_id, action: 'running-success'});
-								terminalOutput("Run Successfully!...");											
-							}
+								terminalOutput("Run Successfully!...");
 							                        		
-                        	terminalOutput(arr.content);
-							terminalOutput("THIS LINE INDICATES THE END...");
+								terminalOutput(arr.content);
+								terminalOutput("THIS LINE INDICATES THE END...");											
+							}
 						});
                         
                     }, 1000);                            

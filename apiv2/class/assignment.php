@@ -129,7 +129,7 @@ class assignment extends mysql{
 			}
 	    }
     }
-    
+    /*
     public function runAgainstTestCase($group_id){
 		if(isset($group_id)){
 		$path = "/var/www/html2/code";
