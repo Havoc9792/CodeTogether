@@ -129,7 +129,7 @@ class assignment extends mysql{
 			}
 	    }
     }
-    /*
+    
     public function runAgainstTestCase($group_id){
 		if(isset($group_id)){
 		$path = "/var/www/html2/code";
@@ -139,7 +139,7 @@ class assignment extends mysql{
 				$this->rrmdir($file);
 			}
 			mkdir($file);
-			$sql = "SELECT * FROM assignment_testcase AT JOIN assignment_group as AG ON AG.assignment_id = AT.assignment_id where AG.group_id = '{$group_id}'"
+			$sql = "SELECT * FROM assignment_testcase AT JOIN assignment_group as AG ON AG.assignment_id = AT.assignment_id where AG.group_id = '{$group_id}'";
 			$result = $this->query($sql);
 			$inputs = array();
 			$expectedOutputs = array();
