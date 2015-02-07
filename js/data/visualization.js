@@ -13,13 +13,10 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
     var height = width*0.7;
     var x_margin = 40;
     var y_margin = 40;
-    
     var max_depth=1;
-    
+    var group_total = 0;
     var data_slices = [];
     var max_level = 2;
-	
-	var group_total = 0;
 	
     var svg = d3.select("#"+element_id).append("svg")
         .attr("width", width)
@@ -95,7 +92,11 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
             
         function update_legend(d)
         {
-            legend.html(legend_function(d) + " (" + Number(d[4][0]/group_total*100).toPrecision(3) + "%)");
+			var percentage = Number(d[4][0]/group_total*100).toPrecision(3);
+			if (group_total == 0){
+				percentage = 100;
+			}
+            legend.html(legend_function(d) + " (" + percentage + "%)");
             legend.transition().duration(200).style("opacity","1");
         }
         
