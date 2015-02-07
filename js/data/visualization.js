@@ -18,7 +18,9 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
     
     var data_slices = [];
     var max_level = 2;
-
+	
+	var group_total = 0;
+	
     var svg = d3.select("#"+element_id).append("svg")
         .attr("width", width)
         .attr("height", height)
@@ -31,6 +33,9 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
         var total = count_function(data);
         var children = data[2];
         var current_deg = start_deg;
+		if (level == 0){
+			group_total = total;
+		}
         if (level > max_level)
         {
             return;
@@ -80,7 +85,7 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
     if (title_function != undefined)
     {
         slices.append("svg:title")
-              .text(title_function);        
+              .text(title_function);
     }
     if (legend_function != undefined)
     {
@@ -90,7 +95,7 @@ function init_code_hierarchy_plot(element_id,data,count_function,color_function,
             
         function update_legend(d)
         {
-            legend.html(legend_function(d));
+            legend.html(legend_function(d) + " (" + Number(d[4][0]/group_total*100).toPrecision(3) + "%)");
             legend.transition().duration(200).style("opacity","1");
         }
         
@@ -262,6 +267,7 @@ function plot_data (datatype){
 	}else if (datatype == "code"){
 		var code_hierarchy_data = create_code_data();
 	}
+	
 	d3.select("#code_hierarchy").transition().duration(500).style("opacity","0").each("end", function(){
 		init_code_hierarchy_plot("code_hierarchy",code_hierarchy_data,count_function,color_function,label_function,legend_function);
 		d3.select("#code_hierarchy").transition().duration(500).style("opacity","1");
