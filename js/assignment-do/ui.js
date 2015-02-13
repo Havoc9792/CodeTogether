@@ -63,3 +63,19 @@ $("a#add-editor").click(function(){
 		}
 	});
 });
+
+$("i.delete-tab").click(function(){
+	var editor_id = $(this).attr('data-id');
+	if(confirm("Are you sure to delete this tab?")){
+		$.post("/apiv2.1/editor/delete/"+editor_id+"/", function(res){
+			if(res == 1){
+				socket.emit("msg", {group_id: group_id, user_name: user_name, user_id: user_id, action: 'reload'});
+				window.location.reload();				
+			}else{
+				alert("Error Deleting Tab");
+			}
+		});
+	}else{
+		
+	}
+});

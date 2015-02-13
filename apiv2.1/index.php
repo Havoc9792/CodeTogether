@@ -28,6 +28,8 @@ $router->map("POST", '/assignment/[i:assignment_id]/[update|create|delete:action
 $router->map("POST", '/samplecode/[i:assignment_id]/[update|create|delete:action]/', 'SampleCode::manage');
 
 
+$router->map("POST|GET", '/editor/[update|create|delete:action]/[i:editor_id]?/', 'Editor::manage');
+
 $match = $router->match();
 //var_dump($match);
 if($match) {			
