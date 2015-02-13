@@ -35,22 +35,44 @@ $course = $courseAPI->info();
 				</div>						
 			</div>
 			
-			<div class="row">									
-				<div class="col-md-8">					
+			<div class="row m-t-30">									
+				<div class="col-md-8">	
+					<div class="panel panel-default">
+									
 					<?php
 					foreach($courseAPI->courseAssignmentList() as $assignment ):	
 					?>
 					<div class="row">
 						<a href="<?= $router->generate('assignment', array('assignment_id' => $assignment['assignment_id']) ) ?>" style="color: inherit">
 							<div class="col-md-12">							                
-								<div class="panel panel-default">
+								<div class="panel panel-transparent m-b-0">
 									<div class="panel-heading separator">
 										<div class="panel-title">
 											<?= $assignment['title'] ?>
 										</div>
 									</div>
-									<div class="panel-body m-t-10">									
-										<p><?= $assignment['description'] ?></p>
+									<div class="panel-body m-t-10">	
+										<div class="row">
+											<div class="col-xs-8">
+												<p><?= nl2br($assignment['description']) ?></p>
+											</div>
+											<div class="col-xs-4">
+												<p class="pull-right">													
+													<?php														
+													if($assignment['overdue']):	
+													?>
+														<span class="label label-danger">Overdue</span>
+													<?php
+													else:													
+													?>
+														<span class="label label-danger">Deadline in <?= $assignment['deadline_day'] ?> Days</span>
+														<br /><?= $assignment['deadline'] ?>
+													<?php
+													endif;	
+													?>
+												</p>
+											</div>
+										</div>																		
 									</div>
 								</div>                		
 							</div>
@@ -59,6 +81,8 @@ $course = $courseAPI->info();
 					<?php
 					endforeach;	
 					?>
+					
+					</div>
 					
 				</div>
 				<div class="col-md-4">											                

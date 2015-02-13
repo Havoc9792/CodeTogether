@@ -182,8 +182,7 @@ class Assignment{
 			$result['group_count'] = $result2['group_count'];
 			$deadline = explode(" ", $result['deadline']);
 			$result['due_date'] = $deadline[0];
-			$result['due_time'] = $deadline[1];
-						
+			$result['due_time'] = $deadline[1];											
 			
 			$db->where("assignment_id", $assignment_id);
 			$sample_codes = $db->get("assignment_sample_code");
@@ -192,7 +191,15 @@ class Assignment{
 			
 		}
 		
+		$result['deadline_time'] = strtotime($result['deadline']);			
 		
+		if(time() > $result['deadline_time']){
+			$result['overdue'] = true;
+		}else{
+			$result['overdue'] = false;
+			$diff = $result['deadline_time'] - time();
+			$result['deadline_day'] = ceil($diff / 60 / 60 / 24);			
+ 		}			
 
         return $result;
 	}    

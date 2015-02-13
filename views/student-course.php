@@ -34,15 +34,16 @@
 						<div class="panel-body no-padding">
 							<a href="<?= $router->generate('course_detail', array('course_id' => $course['course_id']) ) ?>" style="color: inherit">
 								<div id="portlet-advance" class="panel panel-default">
-									<!--
-									<div class="panel-heading ">
-										<div class="panel-title">Portlet Title
+									
+									<div class="panel-heading separator">
+										<div class="panel-title">
+											<?= $course['course_code'] ?>
 										</div>
 									</div>			
-									-->						
+									
 									<div class="panel-body">
 										<h3>
-											<span class="semi-bold"><?= $course['course_code'] ?></span> <?= $course['name'] ?>
+											<span class="semi-bold"></span> <?= $course['name'] ?>
 										</h3>
 										<p style="height: 60px;">
 											<?= limit_words($course['description'], 20) ?>
