@@ -64,6 +64,12 @@ socket.on("msg", function(data){
 	   		break;	
 	   case "reload":
 	   		window.location.reload();
+	   		break;
+	   case "testcase_ui_load_all":
+		   	testcase_ui_load_all();
 	   		break;		   		   			   					   						   					   			       	
+	   case "testcase_ui_load_all":
+		   	testcase_ui_change_to(data.testcase_id, data.testcase_type);
+	   		break;		   		
    } 
 });
