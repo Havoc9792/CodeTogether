@@ -26,7 +26,7 @@ class User{
         	$db->where("password", $password);
         	$result = $db->get("user");                        
             if($db->count == 0){
-                return -1;                
+                echo -1;                
             }else{
                 $row = $result[0];               
                 $_SESSION['codeTogether']['user_id'] = $row['user_id'];
@@ -56,6 +56,16 @@ class User{
         session_destroy();
         user::authService();
     }
+    
+    
+    public function loginGate(){
+		if(session_status() == PHP_SESSION_NONE) {
+		    session_start();
+		}		    
+        if(isset($_SESSION['codeTogether'])){
+	        header("location: /course/");
+        }	    
+    }    
 
     /**
     * Check login status
@@ -111,9 +121,10 @@ class User{
     
     public static function avatar($user_id = null){		
 	    if(is_null($user_id)){
-		    $user_id = user::authService()['user_id'];
-	    }    
-	    if(file_exists(dirname(dirname(dirname(__FILE__))) . "/files/avatar/$user_id.jpg")){
+		    $user_id = User::authService()['user_id'];
+	    }  
+	    
+	    if(file_exists(dirname(dirname(__FILE__)) . "/files/avatar/$user_id.jpg")){
 		    return "/files/avatar/$user_id.jpg";
 	    }else{
 		    return "/files/avatar/user.jpg";

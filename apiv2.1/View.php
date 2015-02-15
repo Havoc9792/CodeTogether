@@ -7,12 +7,17 @@ class View{
 
 
 	public function render($part, $param1 = null, $param2 = null){
-		global $db, $config, $router;
+		global $db, $config, $router, $user;
 				
 		if($part == "Login"){
+			$user->loginGate();
 			require_once dirname(__DIR__) . '/views/login.php';
 			exit();
-		}		
+		}
+		
+		/* Views below require login */	
+		User::authService();		
+		
 		
 		require_once __DIR__ . '/Course.php';
 		$courseAPI = new Course();	
@@ -28,25 +33,25 @@ class View{
 				$config['assignment_do'] = true;
 				require_once __DIR__ . '/Assignment.php';
 				require_once __DIR__ . '/Testcase.php';			
-				if(user::isStudent()){		
+				if(User::isStudent()){		
 					require dirname(__DIR__) . '/views/student-assignment-do.php';
 				}			
 				break;
 					
 			
 			case "Course":				
-				if(user::isStudent()){		
+				if(User::isStudent()){		
 					require dirname(__DIR__) . '/views/student-course.php';
-				}elseif(user::isTeacher()){
+				}elseif(User::isTeacher()){
 					require dirname(__DIR__) . '/views/teacher-course.php';
 				}												
 				break;
 				
 			case "Course_Detail":
 				$course_id = $param1;
-				if(user::isStudent()){		
+				if(User::isStudent()){		
 					require dirname(__DIR__) . '/views/student-course-detail.php';
-				}elseif(user::isTeacher()){
+				}elseif(User::isTeacher()){
 					require dirname(__DIR__) . '/views/teacher-course-detail.php';
 				}												
 				break;
@@ -54,9 +59,9 @@ class View{
 			case "Assignment":	
 				$assignment_id = $param1;	
 				require_once __DIR__ . '/Assignment.php';			
-				if(user::isStudent()){		
+				if(User::isStudent()){		
 					require dirname(__DIR__) . '/views/student-assignment.php';
-				}elseif(user::isTeacher()){
+				}elseif(User::isTeacher()){
 					$config['script'] = ['teacher-assignment'];
 					require dirname(__DIR__) . '/views/teacher-assignment.php';
 				}			
@@ -65,9 +70,9 @@ class View{
 			case "Assignment_Edit":	
 				$assignment_id = $param1;	
 				require_once __DIR__ . '/Assignment.php';			
-				if(user::isStudent()){		
+				if(User::isStudent()){		
 					die();
-				}elseif(user::isTeacher()){
+				}elseif(User::isTeacher()){
 					$config['script'] = ["teacher-assignment-form"];
 					require dirname(__DIR__) . '/views/teacher-assignment-edit.php';
 				}			
@@ -76,9 +81,9 @@ class View{
 			case "Assignment_Testcase_Edit":	
 				$assignment_id = $param1;	
 				require_once __DIR__ . '/Assignment.php';			
-				if(user::isStudent()){		
+				if(User::isStudent()){		
 					die();
-				}elseif(user::isTeacher()){
+				}elseif(User::isTeacher()){
 					$config['script'] = ["teacher-assignment-testcase"];
 					require dirname(__DIR__) . '/views/teacher-assignment-edit-testcase.php';
 				}			
@@ -87,9 +92,9 @@ class View{
 			case "Assignment_Statistics":	
 				$assignment_id = $param1;	
 				require_once __DIR__ . '/Assignment.php';			
-				if(user::isStudent()){		
+				if(User::isStudent()){		
 					die();
-				}elseif(user::isTeacher()){
+				}elseif(User::isTeacher()){
 					$config['script'] = ["teacher-assignment-stat"];
 					require dirname(__DIR__) . '/views/teacher-assignment-stat.php';
 				}			
@@ -98,9 +103,9 @@ class View{
 			case "Assignment_Group_Statistics":	
 				$assignment_id = $param1;	
 				require_once __DIR__ . '/Assignment.php';			
-				if(user::isStudent()){		
+				if(User::isStudent()){		
 					die();
-				}elseif(user::isTeacher()){
+				}elseif(User::isTeacher()){
 					$config['script'] = ["teacher-assignment-group-stat"];
 					require dirname(__DIR__) . '/views/teacher-assignment-group-stat.php';
 				}			
@@ -123,9 +128,9 @@ class View{
 								
 		$this->render("header");
 		
-		if(user::isStudent()){		
+		if(User::isStudent()){		
 			render("student");
-		}elseif(user::isTeacher()){
+		}elseif(User::isTeacher()){
 			
 			render("teacher");
 		}	

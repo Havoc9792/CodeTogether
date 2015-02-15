@@ -11,9 +11,9 @@ $api_folder = "apiv2";
 $root = dirname(__FILE__);
 require $root . "/inc/config.php";
 require $root . '/inc/AltoRouter.php';
-require $root . '/' . $api_folder . '/class/user.php';
+//require $root . '/' . $api_folder . '/class/user.php';
 $router = new AltoRouter();
-$user = new User();
+//$user = new User();
 
 //$router->setBasePath("/");
 
@@ -36,31 +36,6 @@ $router->map('GET', '/statistics/[i:assignment_id]/group/[i:group_id]/', 'View::
 //Assignment Do
 $router->map('GET', '/assignment/do/[i:assignment_id]/', 'View::render#Assignment_Do', 'assignment_do');
 
-//Assignment Do Page
-/*
-$router->map('GET', '/assignment/do/[i:assignment_id]/', function($assignment_id){
-	global $api_folder, $config, $router;
-	user::authService();
-	user::authRight('student');
-	
-	$config['assignment_do'] = true;
-	$config['pagename'] = "Do Assignment";	
-	require __DIR__ . '/' . $api_folder . '/class/course.php';	
-	$courseAPI = new course();
-	
-	require __DIR__ . '/views/header.php';
-		
-	
-	if(user::isStudent()){		
-		require __DIR__ . '/views/student-assignment-do.php';
-	}
-	
-	require __DIR__ . '/views/footer.php';
-	
-}, 'assignment_do');
-*/
-
-
 
 //Drawing
 $router->map('GET', '/drawing/[i:drawing_id]/', function($drawing_id){
@@ -68,15 +43,6 @@ $router->map('GET', '/drawing/[i:drawing_id]/', function($drawing_id){
 	user::authService();				
 	require __DIR__ . '/' . $api_folder . '/get-drawing-jpg.php';	
 }, 'drawing');
-
-
-//Teacher Assignment Statistic
-
-
-//Teacher Assignment Group Statistic
-
-
-
 
 
 
@@ -99,8 +65,9 @@ if($match && is_callable( $match['target'] ) ) {
 	
 	require_once ROOT . '/inc/AltoRouter.php';
 	require_once ROOT . '/' . API_VERSION . '/MysqliDB.php';
-	//require_once ROOT . '/' . API_VERSION . '/User.php';	
+	require_once ROOT . '/' . API_VERSION . '/User.php';	
 	
+	$user = new User();
 	$db = new MysqliDb('localhost', 'kit', 'kit1234', 'fyp');
 	
 	list($class_name, $method) = explode('::', $match['target']);
