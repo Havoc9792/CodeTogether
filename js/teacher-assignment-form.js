@@ -11,6 +11,22 @@ $(".ace_editor").each(function(){
 
 $(".ace_editor", "form").height($(window).height()*0.7).width("100%");
 
+//Delete Editor
+$("i.delete-tab").click(function(){
+	var editor_id = $(this).attr('data-id');
+	if(confirm("Are you sure to delete this tab?")){				
+		$.post("/apiv2.1/editor/delete/"+editor_id+"/", function(res){			
+			if(res == 1){				
+				window.location.reload();				
+			}else{
+				alert("Error Deleting Tab");
+			}
+		});
+	}else{
+		
+	}
+});
+
 $("a#add-editor").click(function(e){
 	e.preventDefault();
 	var code = [];

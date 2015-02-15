@@ -48,7 +48,7 @@ class Assignment{
 				echo $id;
 				break;	
 							
-			case "update":	
+			case "update":					
 				if(!isset($data)){
 					echo 1;
 					die();

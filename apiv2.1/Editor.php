@@ -18,8 +18,14 @@ class Editor{
 				
 				break;
 			case "delete":							
-				$db->where('editor', $editor_id);								
-				$db->delete('assignment_group_code');
+				$db->where('editor', $editor_id);	
+				
+				if(User::isTeacher()){
+					$db->delete('assignment_sample_code');
+				}else{
+					$db->delete('assignment_group_code');
+				}
+															
 				echo 1;
 				break;
 			case "update":	

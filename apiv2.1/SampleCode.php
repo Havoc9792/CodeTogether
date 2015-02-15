@@ -28,7 +28,7 @@ class SampleCode{
 				$db->delete('assignment_sample_code');
 				echo 1;
 				break;
-			case "update":	
+			case "update":					
 				if(!isset($data)){
 					echo 1;
 					die();
@@ -36,8 +36,8 @@ class SampleCode{
 				
 				foreach($data as $d){
 					$sample_code_id = substr($d['id'], 6);
-					//echo $sample_code_id;
-					$db->where('sample_code_id', $sample_code_id);
+					
+					$db->where('editor', $sample_code_id);
 					$db->update("assignment_sample_code", array(
 						'assignment_id' => $assignment_id, 
 						'code' => $d['editor']

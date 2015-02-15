@@ -7,6 +7,21 @@ $courseAPI = new course($course_id);
 $course = $courseAPI->info();	
 ?>
 
+<style>
+i.delete-tab{
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	color: #F55753;
+	opacity: 0;
+	cursor: pointer;
+}
+
+li.tab-li:hover i.delete-tab{
+	opacity: 1;
+}	
+</style>
+
 <!-- START PAGE CONTENT WRAPPER -->
 <div class="page-content-wrapper">
     <!-- START PAGE CONTENT -->
@@ -176,8 +191,9 @@ $course = $courseAPI->info();
 														foreach($assignment['sample_code'] as $editor){
 															?>
 															
-															<li class="<?= $i==0 ? "active" : "" ?>">
-																<a href="#tab<?= $editor['sample_code_id'] ?>" data-toggle="tab" role="tab">File <?= $i ?></a>
+															<li class="tab-li <?= $i==0 ? "active" : "" ?>">
+																<a href="#tab<?= $editor['editor'] ?>" data-toggle="tab" role="tab">File <?= $i ?></a>
+																<i data-id="<?= $editor['editor'] ?>" class="delete-tab fa fa-minus-circle"></i>
 															</li>								
 															
 															<?php								
@@ -191,8 +207,8 @@ $course = $courseAPI->info();
 														foreach($assignment['sample_code'] as $editor){
 															?>
 															
-															<div class="tab-pane <?= $i==0 ? "active" : "fade" ?>" id="tab<?= $editor['sample_code_id'] ?>">
-																<div id="editor<?= $editor['sample_code_id'] ?>" class="ace_editor"><?= $editor['code'] ?></div>
+															<div class="tab-pane <?= $i==0 ? "active" : "fade" ?>" id="tab<?= $editor['editor'] ?>">
+																<div id="editor<?= $editor['editor'] ?>" class="ace_editor"><?= $editor['code'] ?></div>
 															</div>																						
 															
 															<?php								
