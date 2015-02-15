@@ -11,7 +11,7 @@
                     <!-- START BREADCRUMB -->
                     <ul class="breadcrumb">
                         <li>
-                            <p><a href="<?= $router->generate('course') ?>" class="active">Course</a></p>
+                            <p><a href="<?= $router->generate('course') ?>" class="active">Courses</a></p>
                         </li>                      
                     </ul>
                     <!-- END BREADCRUMB -->

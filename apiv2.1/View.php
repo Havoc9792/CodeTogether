@@ -28,6 +28,12 @@ class View{
 		
 		switch($part){
 			
+			case "Question_Bank":
+				if(User::isTeacher()){
+					require dirname(__DIR__) . '/views/questionbank.php';
+				}			
+				break;
+			
 			case "Assignment_Do":
 				$assignment_id = $param1;	
 				$config['assignment_do'] = true;

@@ -23,6 +23,8 @@ $router->map('GET', '/', 'View::render#Login', 'login');
 //Course
 $router->map('GET', '/course/', 'View::render#Course', 'course');
 $router->map('GET', '/course/[i:course_id]/', 'View::render#Course_Detail', 'course_detail');
+$router->map('GET', '/course/add/', 'View::render#Course_New', 'course_new');
+$router->map('GET', '/questionbank/', 'View::render#Question_Bank', 'questionbank');
 $router->map('GET', '/assignment/[i:assignment_id]/', 'View::render#Assignment', 'assignment');
 
 //Teacher Assignment

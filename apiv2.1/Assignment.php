@@ -123,7 +123,7 @@ class Assignment{
 					JOIN assignment_group_student AGS ON AG.group_id = AGS.group_id
 					JOIN user U ON U.user_id = AGS.student_id
 					JOIN school S ON S.school_id = U.school_id
-					WHERE AG.assignment_id = '{$assignment_id}'
+					WHERE AG.assignment_id = '{$assignment_id}'					
 					AND AG.group_id = '{$group_id}'
 					ORDER BY U.name ASC");			
 		}else{
@@ -132,7 +132,7 @@ class Assignment{
 					JOIN assignment_group_student AGS ON AG.group_id = AGS.group_id
 					JOIN user U ON U.user_id = AGS.student_id
 					JOIN school S ON S.school_id = U.school_id
-					WHERE AG.assignment_id = '{$assignment_id}'
+					WHERE AG.assignment_id = '{$assignment_id}'					
 					ORDER BY U.name ASC");
 		}
 		
@@ -156,7 +156,7 @@ class Assignment{
 			return -1;
 		}
 		
-		$db->where("assignment_id", $assignment_id);
+		$db->where("assignment_id", $assignment_id);		
         $result = $db->get("assignment")[0];                
        
 		$db->where("type_id", $assignment_id);
