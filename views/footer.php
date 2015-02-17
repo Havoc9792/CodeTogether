@@ -75,7 +75,8 @@
     <!-- END PAGE LEVEL JS -->
         
 	<script>
-		
+	
+	var editor_id = <?= isset($assignment['editor']) ? $assignment['editor'][0]['editor'] : 0 ?>;
     var group_id = <?= isset($assignment['group_id']) ? $assignment['group_id'] : ( isset($group_id) ? $group_id : 0 )  ?>;
     var assignment_id = <?= isset($assignment) ? $assignment['assignment_id'] : 0 ?>;
 
@@ -134,7 +135,7 @@
 		<script src="/js/assignment-do/recorderjs/recorder.js"></script>
 		<script src="/js/assignment-do/drawing.js"></script>
 		<script src="/js/assignment-do/chat.js"></script>
-		<script src="/js/assignment-do/videochat.js"></script>
+<!--		<script src="/js/assignment-do/videochat.js"></script>-->
 		<script src="/js/assignment-do/testcase.js"></script>
 			
 		<script src="/js/assignment-do/history.js"></script>

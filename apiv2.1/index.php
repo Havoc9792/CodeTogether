@@ -8,6 +8,7 @@ define("API_VERSION", "apiv2.1");
 require ROOT . '/inc/AltoRouter.php';
 require ROOT . '/' . API_VERSION . '/MysqliDB.php';
 require ROOT . '/' . API_VERSION . '/User.php';
+require ROOT . '/' . API_VERSION . '/GlobalFunction.php';
 
 $db = new MysqliDb('localhost', 'kit', 'kit1234', 'fyp');
 $router = new AltoRouter();
@@ -17,7 +18,7 @@ $router->setBasePath("/apiv2.1");
 $router->map('POST', '/login/', 'User::login');
 $router->map('POST|GET', '/logout/', 'User::logout');
 
-//Teacher API
+
 $router->map('POST|GET', '/compileAndRun/[i:assignment_id]/[a:inputs]/', 'Java::compileAndRun');
 
 $router->map('POST', '/testcase/[i:assignment_id]/[save|delete:action]/[i:testcase_id]?/', 'Testcase::manage');
@@ -29,6 +30,7 @@ $router->map("POST", '/samplecode/[i:assignment_id]/[update|create|delete:action
 
 
 $router->map("POST|GET", '/editor/[update|create|delete:action]/[i:editor_id]?/', 'Editor::manage');
+$router->map("GET", '/editor/[i:editor_id]/history/[i:history_id]?/', 'Editor::history');
 
 $match = $router->match();
 //var_dump($match);

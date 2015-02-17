@@ -189,10 +189,32 @@ li.tab-li:hover i.delete-tab{
 					<div class="navbar navbar-default navbar-sm relative">
 						<div class="navbar-inner no-padding">							
 							<div class="view-heading">
-								Click to Restore 								
+								Click to Restore <span id="tab-name">Tab 0</span>								
 							</div>							
 						</div>
 					</div>		
+					
+					<div class="panel panel-transparent">	
+						<div class="panel-body no-padding">
+							<div class="table-responsive">
+								<table class="table table-hover table-condensed" id="">
+									<thead>
+										<tr>											
+											<th style="width:40%">Save Time</th>
+											<th style="width:40%">By</th>
+											<th style="width:20%"><i class="fa fa-gear"></i></th>						
+										</tr>
+									</thead>
+									<tbody>
+										
+										
+										
+																	
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>					
 							                
 		                                 
 		                  <ul style="overflow: scroll; height: calc( 100% - 36px )">
@@ -277,7 +299,7 @@ li.tab-li:hover i.delete-tab{
 							foreach($assignment['editor'] as $editor){
 								?>
 								
-								<li class="tab-li <?= $i==0 ? "active" : "" ?>">
+								<li class="tab-li <?= $i==0 ? "active" : "" ?>" data-editor-name="<?= $i ?>" data-editor-id="<?= $editor['editor'] ?>">
 									<a class="" href="#tab<?= $editor['editor'] ?>" data-toggle="tab" role="tab">Tab <?= $i ?></a>
 									<i data-id="<?= $editor['editor'] ?>" class="delete-tab fa fa-minus-circle"></i>
 								</li>								
@@ -323,3 +345,28 @@ li.tab-li:hover i.delete-tab{
     </div>
    </div>
     <!-- END PAGE CONTENT -->
+    
+    
+<!-- Modal -->
+<div class="modal fade slide-up disable-scroll" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content-wrapper">
+        <div class="modal-content">
+            <div class="modal-header clearfix text-left">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                  <i class="pg-close fs-14"></i>
+                </button>
+                <h4>Code History Preview</h4>
+            </div>
+            <div class="modal-body">
+                <div id="historyPreviewEditor" class="ace_editor_preview"></div>
+            </div>
+            <div class="modal-footer">
+	            <a href="#" class="btn btn-danger btn-block">Restore</a>
+            </div>
+        </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+<!-- /.modal-dialog -->

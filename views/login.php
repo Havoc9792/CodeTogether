@@ -42,7 +42,8 @@
       <!-- START Login Background Pic Wrapper-->
       <div class="bg-pic">
         <!-- START Background Pic-->
-        <img src="assets/img/login_bg.jpg" data-src="assets/img/login_bg.jpg" data-src-retina="assets/img/login_bg.jpg" alt="" class="lazy">
+	        <img src="assets/img/login_bg.jpg" data-src="assets/img/login_bg.jpg" data-src-retina="assets/img/login_bg.jpg" alt="" class="lazy">
+<!--        <img src="http://hku.iclass.hk/images/hku.jpg" class="lazy">-->
         <!-- END Background Pic-->
         <!-- START Background Caption-->
         <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
@@ -94,7 +95,7 @@
           <div class="pull-bottom sm-pull-bottom">
             <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
               <div class="col-sm-3 col-md-2 no-padding">
-                <img alt="" class="m-t-5" data-src="" data-src-retina="" height="60" src="" width="60">
+                
               </div>
               <div class="col-sm-9 no-padding m-t-10">
                 <p>

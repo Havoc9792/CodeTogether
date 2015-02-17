@@ -1,33 +1,67 @@
-var fileHistory = function(group_id){
-    $.post("/apiv2/get-file-history.php", {group_id: group_id}, function(res){
+$("li.tab-li").click(function(){
+	var editor_id = $(this).attr('data-editor-id');
+	var editor_name = $(this).attr('data-editor-name');
+	$("#quickview-history #tab-name").text("Tab "+editor_name);
+	fileHistory(editor_id);
+});
+
+
+
+var historyEditor = ace.edit("historyPreviewEditor");		   
+historyEditor.setTheme("ace/theme/monokai");	
+historyEditor.getSession().setMode("ace/mode/java"); 
+historyEditor.renderer.setShowGutter(false);
+historyEditor.setShowPrintMargin(false);
+historyEditor.setOptions({
+    readOnly: true,
+    highlightActiveLine: false,
+    highlightGutterLine: false
+});	
+$("div#historyPreviewEditor").height($(window).height()*0.6).width("100%");
+
+
+$("#quickview-history").on("click", "a", function(){
+	window.history_id = $(this).attr('data-history-id');
+	$.get("/apiv2.1/editor/"+editor_id+"/history/"+history_id+"/", function(res){
+		console.log(res);
+		var editor = $.parseJSON(res);
+		console.log(editor);
+		historyEditor.setValue(editor.code, -1);
+		$('#historyModal').modal('show');
+	});
+});
+
+
+var fileHistory = function(editor_id){
+	window.editor_id = editor_id;
+    $.get("/apiv2.1/editor/"+editor_id+"/history/", function(res){
        	//console.log(res); 
        	
        	var html = "";
 		$.each($.parseJSON(res), function(i, item){	
-			html += '<li class="alert-list p-t-10 p-b-10 p-l-10 p-r-10">';
-			html += '<a href="#" data-id="'+item.assignment_history_id+'" class="p-t-10 p-b-10" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">';
-		    html += '<p class="col-xs-height col-middle"><span class="text-danger fs-10"><i class="fa fa-circle"></i></span></p>';
-		    html += '<p class="p-l-10 col-xs-height col-middle col-xs-12 overflow-ellipsis fs-12">';
-		    html += '<span class="text-master link">'+item.save_time+'<br></span>';
-		    html += '<span class="text-master">'+item.name+'</span>';
-		    html += '</p></a></li>';						   			    
+			html += '<tr>';
+			html += '<td class="v-align-middle semi-bold">'+item.save_time+'</td>';
+			html += '<td class="v-align-middle">'+item.name+'</td>';
+			html += '<td class="indicator v-align-middle semi-bold"><a href="#" data-history-id="'+item.assignment_history_id+'" data-toggle="modal" data-target="#historyModals"><i class="fa fa-search"></i></a></td>'
+			html += '</tr>';						   			    
 		});       
 		
-		$("ul", "#quickview-history").html(html);		       			       	
+		$("tbody", "#quickview-history").html(html);		       			       	
     });
 };
 
-var revertFileHistory = function(id){
-    $.post("/apiv2/revert-file-history.php", {group_id: group_id, id: id}, function(res){
-       	console.log($.parseJSON(res).code); 
-       	editor.setValue($.parseJSON(res).code);  
-       	socket.emit("msg", {group_id: group_id, user_name: user_name, user_id: user_id, action: 'restore'});   			       			       
-    });	        
+var revertFileHistory = function(){	
+	var id = "editor" + window.editor_id;
+	var editor = ace.edit(id);
+	editor.setValue(historyEditor.getSession().getValue());
+	socket.emit("msg", {group_id: group_id, user_name: user_name, user_id: user_id, action: 'restore'});            
 }
 
-$(document).on('click', '#quickview-history ul li a', function(){
-    var id = $(this).attr('data-id');
-    revertFileHistory(id);
+$(document).on('click', '#historyModal a', function(){   
+	$('#historyModal').modal('hide'); 
+    setTimeout(function(){
+	    revertFileHistory();
+	}, 1000);
 });
 
-fileHistory(group_id);
+fileHistory(editor_id);

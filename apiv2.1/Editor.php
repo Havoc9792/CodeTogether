@@ -6,6 +6,27 @@ class Editor{
 		//$this->assignment_id = $assignment_id;  	                 
     }
 
+
+	public function history($editor_id, $history_id = null){
+		global $db;
+		if(!GlobalFunction::isUserOwnEditor($editor_id)) die('no auth');
+		
+		//Get a list of history
+		if(is_null($history_id)){		
+			$data = $db->rawQuery("SELECT AH.editor as editor, AH.assignment_history_id as assignment_history_id, AH.save_time as save_time, U.name as name
+				FROM assignment_history AH 
+				JOIN user U ON AH.user_id = U.user_id
+				WHERE AH.editor = '{$editor_id}'");
+		}else{
+			//Get the editor with a specific history
+			$data = $db->rawQuery("SELECT AH.editor as editor, AH.code as code, AH.assignment_history_id as assignment_history_id, AH.save_time as save_time, U.name as name
+				FROM assignment_history AH 
+				JOIN user U ON AH.user_id = U.user_id
+				WHERE AH.editor = '{$editor_id}'
+				AND AH.assignment_history_id = '{$history_id}' ")[0];			
+		}
+	    echo json_encode($data);	    		
+	}
 	
 
 	public function manage($action, $editor_id = null){
