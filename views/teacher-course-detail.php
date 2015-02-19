@@ -34,7 +34,7 @@ $course = $courseAPI->info();
 					<h1><?= $course['course_code'] ?> <?= $course['name'] ?></h1>				
 				</div>	
 				<div class="col-md-3">
-					<a href="<?= $router->generate('assignment_new', array('course_id' => $course['course_id']) ) ?>" class="btn btn-lg btn-default m-t-15 pull-right">
+					<a id="new-assignment" href="#" class="btn btn-lg btn-default m-t-15 pull-right">
 						New Assignment
 					</a>					
 				</div>									
@@ -64,9 +64,13 @@ $course = $courseAPI->info();
 												<p><?= nl2br($assignment['description']) ?></p>
 											</div>
 											<div class="col-xs-4">
-												<p class="pull-right">													
+												<p class="pull-right">	
 													<?php														
-													if($assignment['overdue']):	
+													if($assignment['status'] == 'draft'):	
+													?>													
+														<span class="label label-warning">Draft</span>											
+													<?php														
+													elseif($assignment['overdue']):	
 													?>
 														<span class="label label-danger">Overdue</span>
 													<?php

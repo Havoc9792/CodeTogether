@@ -69,6 +69,7 @@ class View{
 				if(User::isStudent()){		
 					require dirname(__DIR__) . '/views/student-course-detail.php';
 				}elseif(User::isTeacher()){
+					$config['script'] = ["teacher-course-detail"];
 					require dirname(__DIR__) . '/views/teacher-course-detail.php';
 				}												
 				break;

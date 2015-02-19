@@ -7,7 +7,7 @@ class Editor{
     }
 
 
-	public function history($editor_id, $history_id = null){
+	public function getHistory($editor_id, $history_id = null){
 		global $db;
 		if(!GlobalFunction::isUserOwnEditor($editor_id)) die('no auth');
 		
@@ -28,6 +28,25 @@ class Editor{
 	    echo json_encode($data);	    		
 	}
 	
+	public function remove($editor_id){		
+	    global $db;
+	    	    		
+		$user_id = User::authService()['user_id'];		
+		if(!GlobalFunction::isUserOwnEditor($editor_id)) die('no auth');
+		
+		$db->where('editor', $editor_id);	
+		
+		if(User::isTeacher()){
+			$db->delete('assignment_sample_code');
+		}elseif(User::isStudent()){
+			$db->delete('assignment_group_code');			
+			$db->where('editor', $editor_id);
+			$db->delete('assignment_history');
+		}
+													
+		echo 1;		
+	}
+	
 
 	public function manage($action, $editor_id = null){
 		global $db;					
@@ -40,18 +59,7 @@ class Editor{
 				break;
 			case "delete":	
 				if(!GlobalFunction::isUserOwnEditor($editor_id)) die('no auth');						
-				$db->where('editor', $editor_id);	
-				
-				if(User::isTeacher()){
-					$db->delete('assignment_sample_code');
-				}else{
-					$db->delete('assignment_group_code');
-					
-					$db->where('editor', $editor_id);
-					$db->delete('assignment_history');
-				}
-															
-				echo 1;
+
 				break;
 			case "update":	
 				if(!isset($data)){

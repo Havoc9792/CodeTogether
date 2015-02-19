@@ -221,14 +221,7 @@ $course = $courseAPI->info();
 					                							
 				</div>
 			</div>
-			
-			<div class="row">
-				<div class="col-xs-12">
-					<a href="" class="btn btn-block btn-danger">
-						Delete Assignment
-					</a>				
-				</div>
-			</div>
+		
 											
 		<!-- END PLACE PAGE CONTENT HERE -->
 		</div>

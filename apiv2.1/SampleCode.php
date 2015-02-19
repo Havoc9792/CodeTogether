@@ -8,6 +8,16 @@ class SampleCode{
 		//$this->assignment_id = $assignment_id;  	                 
     }
 
+	public function create($assignment_id){
+		global $db;			
+		
+		User::authRight('teacher');
+		$teacher_id = User::authService()['user_id'];
+		$data = $_POST['code'];	
+			
+		$id = $db->insert("assignment_sample_code", array("assignment_id" => $assignment_id));
+		echo $id;		
+	}
 	
 
 	public function manage($assignment_id, $action){
@@ -18,8 +28,7 @@ class SampleCode{
 				
 		switch($action){
 			case "create":
-				$id = $db->insert("assignment_sample_code", array("assignment_id" => $assignment_id));
-				echo $id;
+
 				break;
 			case "delete":			
 				$editor_id = $_POST['editor_id'];

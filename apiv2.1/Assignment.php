@@ -20,6 +20,81 @@ class Assignment{
 	        //$this->info = $this->assignmentInfo($assignment_id);
 	        $this->assignment_id = $assignment_id;
         }
+        
+    }    
+    
+    
+    public function create(){
+	    global $db;
+	    
+	    User::authRight('teacher');
+	    $teacher_id = User::authService()['user_id'];
+	    
+	    $course_id = $_POST['course_id'];
+	    $id = $db->insert('assignment', Array(
+		    'course_id' => $course_id,
+		    'title' => 'Untitled Assignment'
+	    ));
+	    echo $id;
+    }
+         
+    public function remove($assignment_id){
+	    global $db;
+	    
+		User::authRight('teacher');
+		$teacher_id = User::authService()['user_id'];
+		
+		
+		
+		$db->where('assignment_id', $assignment_id);
+		$db->update('assignment', Array(
+			'is_deleted' => 1
+		));
+		echo 1;
+			    
+    }
+    
+    public function update($assignment_id){
+		global $db;						
+		
+		User::authRight('teacher');
+		$teacher_id = User::authService()['user_id'];		
+		
+		$_PUT = GlobalFunction::getInput();	    
+			
+		$data = $_PUT['form'];
+		$code = $_PUT['code'];	
+		
+		$parsedData = array();
+		foreach($data as $d){			
+			$parsedData[$d['name']] = $d['value'];
+		}	
+			
+		if(!isset($data)){
+			echo 1;
+			die();
+		}		
+																
+		$deadline = date("Y-m-d H:i:s", strtotime($parsedData['due-date'] . $parsedData['due-time']) );
+		$db->where('assignment_id', $assignment_id);				
+		$db->update('assignment', array(
+				'title' => $parsedData['title'],
+				"course_id" => $parsedData['course-id'],
+				"description" => $parsedData['description'],
+				"deadline" => $deadline,
+				"status" => $parsedData['status'],
+				"grouping" => $parsedData['grouping'],							
+			)
+		);
+															
+		if(isset($code)){
+			require_once 'SampleCode.php';
+			$samplecode = new SampleCode;
+			$samplecode->manage($assignment_id, "update");
+		}else{
+			echo 1;
+		}	
+					    
     }
 
 	public function manage($assignment_id, $action){
@@ -49,39 +124,11 @@ class Assignment{
 				break;	
 							
 			case "update":					
-				if(!isset($data)){
-					echo 1;
-					die();
-				}		
-																		
-				$deadline = date("Y-m-d H:i:s", strtotime($parsedData['due-date'] . $parsedData['due-time']) );
-				$db->where('assignment_id', $assignment_id);				
-				$db->update('assignment', array(
-						'title' => $parsedData['title'],
-						"course_id" => $parsedData['course-id'],
-						"description" => $parsedData['description'],
-						"deadline" => $deadline,
-						"status" => $parsedData['status'],
-						"grouping" => $parsedData['grouping'],							
-					)
-				);
-																	
-				if(isset($code)){
-					require_once 'SampleCode.php';
-					$samplecode = new SampleCode;
-					$samplecode->manage($assignment_id, "update");
-				}else{
-					echo 1;
-				}
+
 												
 				break;
 			case "delete":			
-				$editor_id = $_POST['editor_id'];
-				$db->where('assignment_id', $assignment_id);
-				$db->where('editor_id', $editor_id);
-				$db->delete('assignment_sample_code');
-				echo 1;
-				break;				
+			
 		}										
 		
 	}

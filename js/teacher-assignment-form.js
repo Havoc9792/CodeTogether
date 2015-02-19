@@ -11,13 +11,34 @@ $(".ace_editor").each(function(){
 
 $(".ace_editor", "form").height($(window).height()*0.7).width("100%");
 
+//Delete assignment
+$('a#delete-assignment').click(function(){
+	if(confirm("Are you sure to delete this assignment?")){
+		$.delete("/apiv2.1/assignment/"+assignment_id+"/", function(res){	
+			console.log(res);		
+			if(res == 1){				
+				notification("Assignment deleted, please wait for redirection", 'success');	
+				setTimeout(function(){
+					window.location = "/course/"+course_id+"/";
+				}, 1000);				
+			}else{
+				alert("Error Deleting Tab");
+			}
+		});		
+	}
+});
+
 //Delete Editor
 $("i.delete-tab").click(function(){
 	var editor_id = $(this).attr('data-id');
 	if(confirm("Are you sure to delete this tab?")){				
-		$.post("/apiv2.1/editor/delete/"+editor_id+"/", function(res){			
+		$.delete("/apiv2.1/editor/"+editor_id+"/", function(res){	
+			console.log(res);		
 			if(res == 1){				
-				window.location.reload();				
+				notification("Code tab deleted, please wait for redirection", 'success');	
+				setTimeout(function(){
+					window.location.reload();
+				}, 1000);				
 			}else{
 				alert("Error Deleting Tab");
 			}
@@ -44,13 +65,12 @@ $("a#add-editor").click(function(e){
 	
 	var form = $("form").serializeArray();
 					
-	$.post("/apiv2.1/assignment/"+assignment_id+"/update/", {form: form , code: code}, function(res){
+	$.put("/apiv2.1/assignment/"+assignment_id+"/", {form: form , code: code}, function(res){
 		console.log(res);			
 					
-		if(res > 0){
-			notification("Assignment Details Saved", 'success');	
+		if(res > 0){				
 			
-			$.post("/apiv2.1/samplecode/"+assignment_id+"/create/", function(res){
+			$.post("/apiv2.1/samplecode/"+assignment_id+"/", function(res){
 				console.log(res);			
 				if(res > 0){
 					notification("New code tab created, please wait for redirection", 'success');	
@@ -97,7 +117,7 @@ $("input#submit", "form").click(function(e){
 	
 	console.log(code);
 			
-	$.post("/apiv2.1/assignment/"+assignment_id+"/update/", {form: form , code: code}, function(res){
+	$.put("/apiv2.1/assignment/"+assignment_id+"/", {form: form , code: code}, function(res){
 		console.log(res);			
 		if(res > 0){
 			notification("Assignment Details Saved", 'success');			

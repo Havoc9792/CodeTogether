@@ -24,13 +24,21 @@ $router->map('POST|GET', '/compileAndRun/[i:assignment_id]/[a:inputs]/', 'Java::
 $router->map('POST', '/testcase/[i:assignment_id]/[save|delete:action]/[i:testcase_id]?/', 'Testcase::manage');
 $router->map('GET', '/testcase/[i:assignment_id]/', 'Testcase::get');
 
-$router->map("POST", '/assignment/[i:assignment_id]/[update|create|delete:action]/', 'Assignment::manage');
-
-$router->map("POST", '/samplecode/[i:assignment_id]/[update|create|delete:action]/', 'SampleCode::manage');
 
 
-$router->map("POST|GET", '/editor/[update|create|delete:action]/[i:editor_id]?/', 'Editor::manage');
-$router->map("GET", '/editor/[i:editor_id]/history/[i:history_id]?/', 'Editor::history');
+$router->map("POST", '/assignment/', 'Assignment::create');
+$router->map("GET", '/assignment/[i:assignment_id]?/', 'Assignment::get');
+$router->map("PUT", '/assignment/[i:assignment_id]/', 'Assignment::update');
+$router->map("DELETE", '/assignment/[i:assignment_id]/', 'Assignment::remove');
+
+
+$router->map("DELETE", '/editor/[i:editor_id]/', 'Editor::remove');
+$router->map("GET", '/editor/[i:editor_id]/history/[i:history_id]?/', 'Editor::getHistory');
+
+
+$router->map("POST", '/samplecode/[i:assignment_id]/', 'SampleCode::create');
+
+
 
 $match = $router->match();
 //var_dump($match);

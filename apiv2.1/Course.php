@@ -43,7 +43,7 @@ class Course{
         }
         //If user is teacher
         if(user::isTeacher() ){
-	        $db->where('user_id', $user_id);
+	        $db->where('user_id', $user_id);	       
 	        $courseList = $db->get("course");                       
             foreach($courseList as &$row){
                 $row['studentList'] = $this->courseStudentsList($row['course_id']);                
@@ -55,7 +55,7 @@ class Course{
                      JOIN course_student CS ON CS.course_id = C.course_id
                      JOIN user U ON U.user_id = C.user_id
                      JOIN school S ON S.school_id = U.school_id
-                     WHERE CS.user_id = '$user_id' 
+                     WHERE CS.user_id = '$user_id'                      
                      ");            
             return $courseList;
         }
@@ -108,6 +108,7 @@ class Course{
         
         $db->where("course_id", $course_id);
         $db->where("is_questionbank", 0);
+        $db->where("is_deleted", 0);
         $data = $db->get("assignment");
         
         $assignments = array();

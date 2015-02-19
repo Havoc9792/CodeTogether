@@ -222,18 +222,23 @@ li.tab-li:hover i.delete-tab{
 			                    		</div>				
 			                    	</div><!-- END row -->                        
 			                    </div>
-			                    <!-- END Second Step -->	
-			                    			                    					                    
+			                    <!-- END Second Step -->				                    			    			                    			  			                    			                    					                    
 			
 			                    <!-- Form Buttons -->	
 			                    <div class="row">		               
-			                    	<div class="col-md-10 col-md-offset-1">     
-					                    <div class="form-group form-actions">
-					                    	<input id="submit" type="submit" value="Save" class="form-control btn btn-primary btn-block" >
-					                    </div>
+			                    	<div class="col-md-12 col-md-offset-0">     					                    
+					                    <input id="submit" type="submit" value="Save" class="btn btn-lg btn-primary btn-block" >					                    
 			                    	</div>
 			                    </div><!-- END row -->
 			                    <!-- END Form Buttons -->
+			                    
+								<div class="row m-t-15">
+									<div class="col-xs-12">
+										<a href="#" id="delete-assignment" class="btn btn-block btn-danger">
+											Delete Assignment
+										</a>				
+									</div>
+								</div>			                    
 			                </form>	                    	
 						</div>
 	                </div>					
