@@ -93,7 +93,7 @@ li.tab-li:hover i.delete-tab{
 	<div class="tab-content">
 		
 		
-		<div class="tab-pane fade in no-padding" id="quickview-question">
+		<div class="tab-pane fade no-padding" id="quickview-question">
 			<div class="view-port clearfix" id="question">				
 				<div class="view bg-white">
 					<!-- BEGIN View Header !-->
@@ -118,7 +118,7 @@ li.tab-li:hover i.delete-tab{
 		</div>	
 		
 		
-		<div class="tab-pane fade in no-padding" id="quickview-draw">
+		<div class="tab-pane fade no-padding" id="quickview-draw">
 			<div class="view-port clearfix" id="draw">				
 				<div class="view bg-white">
 					<!-- BEGIN View Header !-->
@@ -139,7 +139,7 @@ li.tab-li:hover i.delete-tab{
 			</div>
 		</div>		
 		
-		<div class="tab-pane fade in no-padding" id="quickview-console">
+		<div class="tab-pane fade in active no-padding" id="quickview-console">
 			<div class="view-port clearfix" id="console">				
 				<div class="view bg-white relative">
 					<div class="navbar navbar-default navbar-sm">
@@ -227,7 +227,7 @@ li.tab-li:hover i.delete-tab{
 		</div>
 		
 		
-		<div class="tab-pane fade active no-padding" id="quickview-chat">
+		<div class="tab-pane fade no-padding" id="quickview-chat">
 			<div class="view-port clearfix" id="chat">
 				<!-- BEGIN Conversation View  !-->
 				<div class="view chat-view bg-white relative clearfix">
