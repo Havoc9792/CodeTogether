@@ -38,13 +38,17 @@ class Editor{
 			case "create":
 				
 				break;
-			case "delete":							
+			case "delete":	
+				if(!GlobalFunction::isUserOwnEditor($editor_id)) die('no auth');						
 				$db->where('editor', $editor_id);	
 				
 				if(User::isTeacher()){
 					$db->delete('assignment_sample_code');
 				}else{
 					$db->delete('assignment_group_code');
+					
+					$db->where('editor', $editor_id);
+					$db->delete('assignment_history');
 				}
 															
 				echo 1;
