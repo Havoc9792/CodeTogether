@@ -120,7 +120,11 @@
 	                    <!--
                         <img src="assets/img/logo.png" alt="logo" data-src="assets/img/logo.png" data-src-retina="assets/img/logo_2x.png" width="93" height="25">
                         -->
-                        <h3><i class="fa fa-code"></i> CodeTogether</h3>
+                        <h3 class="title">
+	                        
+	                        	<i class="fa fa-code"></i> CodeTogether
+	                                              
+	                    </h3>
                     </div>
                     <!-- BEGIN NOTIFICATION DROPDOWN -->
                     <ul class="notification-list no-margin hidden-sm hidden-xs b-grey b-l b-r no-style p-l-30 p-r-20">

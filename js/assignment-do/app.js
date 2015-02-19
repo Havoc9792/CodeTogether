@@ -81,7 +81,7 @@ $("#compile").click(function(){
 //Leave Room
 $(window).bind('beforeunload', function(){
     socket.emit("leave group", {group_id: group_id, name: user_name, user_id: user_id});
-    return("Are you sure to leave?");
+    return;
 });
 
 var loader = function(status){

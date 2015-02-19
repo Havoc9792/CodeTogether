@@ -52,6 +52,10 @@ var newEditorStyle = function(){
 
 newEditorStyle();
 
+$("h3.title").click(function(){
+	window.location = "/assignment/"+assignment_id;
+});
+
 $("a#add-editor").click(function(){
 	$.post("/apiv2/add-editor.php", {group_id: group_id}, function(res){
 		console.log(res);
