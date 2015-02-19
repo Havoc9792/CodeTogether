@@ -40,11 +40,7 @@ $router->map('GET', '/assignment/do/[i:assignment_id]/', 'View::render#Assignmen
 
 
 //Drawing
-$router->map('GET', '/drawing/[i:drawing_id]/', function($drawing_id){
-	global $api_folder, $config, $router;
-	user::authService();				
-	require __DIR__ . '/' . $api_folder . '/get-drawing-jpg.php';	
-}, 'drawing');
+$router->map('GET', '/drawing/[i:drawing_id]/', 'View::drawing', 'drawing');
 
 
 
@@ -72,15 +68,19 @@ if($match && is_callable( $match['target'] ) ) {
 	$user = new User();
 	$db = new MysqliDb('localhost', 'kit', 'kit1234', 'fyp');
 	
-	list($class_name, $method) = explode('::', $match['target']);
-	list($method_name, $input) = explode('#', $method);
-	
+	list($class_name, $method) = explode('::', $match['target']);	
+		
 	require_once ROOT . '/' . API_VERSION . '/' . $class_name . ".php" ;
 	$c = new $class_name;
-				
-	array_unshift($match['params'], $input);
 	
-	call_user_func_array(array($c, $method_name), $match['params']); 	
+	if(strpos($method, '#') !== false){
+		list($method_name, $input) = explode('#', $method);				
+		array_unshift($match['params'], $input);	
+		call_user_func_array(array($c, $method_name), $match['params']);		
+	}else{
+		call_user_func_array(array($c, $method), $match['params']);
+	}
+ 	
 }else{
 	// no route was matched
 	header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');

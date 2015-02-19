@@ -4,6 +4,17 @@ class View{
     public function __construct() {	    
 		
     }
+    
+    
+    public function drawing($drawing_id){
+	    	    
+		$id = $drawing_id;
+		$remoteImage = ROOT . "/files/drawing/$id.jpg";
+		$imginfo = getimagesize($remoteImage);
+		header("Content-type: image/jpeg");
+		echo file_get_contents($remoteImage);	    
+	    
+    }
 
 
 	public function render($part, $param1 = null, $param2 = null){
