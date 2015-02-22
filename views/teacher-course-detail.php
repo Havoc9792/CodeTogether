@@ -3,6 +3,54 @@ $courseAPI = new course($course_id);
 $course = $courseAPI->info();	
 ?>
 
+<style>
+.course-type-wrapper{
+	padding: 20px;
+}
+
+.course-type{
+	
+	border: 5px dashed #eee;	
+	margin: 0 20px;
+	width: calc(50% - 40px);
+	padding: 20px;
+	cursor: pointer;
+}	
+
+.course-type:hover{
+	border-color: #6D5CAE;
+}
+</style>
+
+<!-- Modal -->
+<div class="modal fade slide-up disable-scroll" id="modalSlideUp" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel" aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+        <div class="modal-content">                                        
+           
+                <div class="row course-type-wrapper">
+	                <div class="col-xs-12">
+		                <h2 class="text-left m-t-0">Add assignment form</h2>
+	                </div>
+	                <div class="col-xs-6 course-type">		                
+		                <a href="#" id="new-assignment">
+				            <h3 class="text-center"><i class="fa fa-cog"></i> Customise</h3>								                
+		                </a>
+	                </div>
+	                <div class="col-xs-6 course-type">
+		                <a href="<?= $router->generate('questionbank') ?>">
+			                <h3 class="text-center"><i class="fa fa-university"></i> Question Bank</h3>
+		                </a>
+	                </div>
+                </div>
+            
+        </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+<!-- /.modal-dialog -->
+
 <!-- START PAGE CONTENT WRAPPER -->
 <div class="page-content-wrapper">
     <!-- START PAGE CONTENT -->
@@ -34,7 +82,7 @@ $course = $courseAPI->info();
 					<h1><?= $course['course_code'] ?> <?= $course['name'] ?></h1>				
 				</div>	
 				<div class="col-md-3">
-					<a id="new-assignment" href="#" class="btn btn-lg btn-default m-t-15 pull-right">
+					<a data-toggle="modal" data-target="#modalSlideUp" href="#" class="btn btn-lg btn-default m-t-15 pull-right">
 						New Assignment
 					</a>					
 				</div>									
