@@ -29,7 +29,7 @@
 					<h1>Course Hub</h1>									
 				</div>				
 				<div class="col-md-3">
-					<a data-toggle="modal" data-target="#modalSlideUp" class="btn btn-light pull-right m-t-15">New Course</a>
+					<a href="<?= $router->generate('course_new') ?>" class="btn btn-light pull-right m-t-15">New Course</a>
 				</div>
 			</div>
 		

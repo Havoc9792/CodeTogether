@@ -43,21 +43,31 @@ class Course{
         }
         //If user is teacher
         if(user::isTeacher() ){
-	        $db->where('user_id', $user_id);	       
-	        $courseList = $db->get("course");                       
+	        $db->join('course_teacher T', 'T.course_id = C.course_id', "LEFT");
+	        $db->where('T.teacher_id', $user_id);	       
+	        $courseList = $db->get("course C");                       
             foreach($courseList as &$row){
                 $row['studentList'] = $this->courseStudentsList($row['course_id']);                
             }
             return $courseList;
         }else{
-            $courseList = $db->rawQuery("SELECT C.description AS description, C.name AS name, C.course_id AS course_id, C.course_code AS course_code, U.user_id as teacher_id, U.name as teacher_name, S.name as teacher_school
+            $courseList = $db->rawQuery("SELECT C.description AS description, C.name AS name, C.course_id AS course_id, C.course_code AS course_code
                      FROM course C
-                     JOIN course_student CS ON CS.course_id = C.course_id
-                     JOIN user U ON U.user_id = C.user_id
-                     JOIN school S ON S.school_id = U.school_id
+                     JOIN course_student CS ON CS.course_id = C.course_id                                          
                      WHERE CS.user_id = '$user_id'                      
-                     ");            
-            return $courseList;
+                     ");      
+            $data = array();
+            foreach($courseList as $course){
+	            $teacher = $db->rawQuery('SELECT CT.teacher_id as teacher_id, U.name as teacher_name, S.name as teacher_school
+	            	FROM course C
+	            	JOIN course_teacher CT ON CT.course_id = C.course_id
+	            	JOIN user U ON U.user_id = CT.teacher_id
+	            	JOIN school S ON S.school_id = U.school_id
+	            	WHERE C.course_id = ' . $course['course_id']);
+	            $course['teacher'] = $teacher;
+	            $data[] = $course;
+            }
+            return $data;
         }
     }
 
@@ -75,18 +85,26 @@ class Course{
 
         if(user::isTeacher() ){
             //techer
-            $db->where("course_id", $course_id);
-            $db->where("user_id", $user_id);
-            $row = $db->get("course")[0];            
+	        $db->join('course_teacher T', 'T.course_id = C.course_id', "LEFT");
+	        $db->where('T.teacher_id', $user_id);	       
+	        $row = $db->getOne("course C");           
         }else{
             //student
-            $row = $db->rawQuery("SELECT C.name as name, C.course_code as course_code, C.course_id as course_id
+            $row = $db->rawQuery("SELECT C.description AS description, C.name as name, C.course_code as course_code, C.course_id as course_id
                     FROM course C
                     JOIN course_student CS ON CS.course_id = C.course_id
-                    WHERE CS.user_id = {$user_id} AND C.course_id = '{$course_id}' ")[0];            
+                    WHERE CS.user_id = {$user_id} AND C.course_id = '{$course_id}' ")[0];           
         }
+        
+		$teacher = $db->rawQuery('SELECT CT.teacher_id as teacher_id, U.name as teacher_name, S.name as teacher_school
+            	FROM course C
+            	JOIN course_teacher CT ON CT.course_id = C.course_id
+            	JOIN user U ON U.user_id = CT.teacher_id
+            	JOIN school S ON S.school_id = U.school_id
+            	WHERE C.course_id = ' . $row['course_id']);                    
+        $row['teacher'] = $teacher;         
 
-        $row['studentList'] = $this->courseStudentsList($row['course_id']);
+        $row['studentList'] = $this->courseStudentsList($row['course_id']);        
         return $row;
     }
 

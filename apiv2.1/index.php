@@ -31,6 +31,8 @@ $router->map("GET", '/assignment/[i:assignment_id]?/', 'Assignment::get');
 $router->map("PUT", '/assignment/[i:assignment_id]/', 'Assignment::update');
 $router->map("DELETE", '/assignment/[i:assignment_id]/', 'Assignment::remove');
 
+$router->map("GET", '/school/[i:school_id]?/', 'School::get');
+
 
 $router->map("DELETE", '/editor/[i:editor_id]/', 'Editor::remove');
 $router->map("GET", '/editor/[i:editor_id]/history/[i:history_id]?/', 'Editor::getHistory');

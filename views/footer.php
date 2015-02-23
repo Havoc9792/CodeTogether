@@ -77,7 +77,7 @@
 	<script>
 	
 	var course_id = <?= isset($course['course_id']) ? $course['course_id'] : 0 ?>;
-	var editor_id = <?= isset($assignment['editor']) ? $assignment['editor'][0]['editor'] : 0 ?>;
+	var editor_id = <?= isset($assignment['editor']) ? ($assignment['editor'][0]['editor'] != "" ? $assignment['editor'][0]['editor'] : 0 ) : 0 ?>;
     var group_id = <?= isset($assignment['group_id']) ? $assignment['group_id'] : ( isset($group_id) ? $group_id : 0 )  ?>;
     var assignment_id = <?= isset($assignment) ? $assignment['assignment_id'] : 0 ?>;
 

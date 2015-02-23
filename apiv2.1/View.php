@@ -58,6 +58,7 @@ class View{
 			
 			case "Course":				
 				if(User::isStudent()){		
+					$config['script'] = ["student-course"];
 					require dirname(__DIR__) . '/views/student-course.php';
 				}elseif(User::isTeacher()){
 					require dirname(__DIR__) . '/views/teacher-course.php';
@@ -73,6 +74,14 @@ class View{
 					require dirname(__DIR__) . '/views/teacher-course-detail.php';
 				}												
 				break;
+			
+			case "Course_New":				
+				if(User::isTeacher()){
+					require_once __DIR__ . '/School.php';
+					$config['script'] = ["teacher-course-new"];
+					require dirname(__DIR__) . '/views/teacher-course-new.php';
+				}												
+				break;							
 				
 			case "Assignment":	
 				$assignment_id = $param1;	
