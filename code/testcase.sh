@@ -4,9 +4,8 @@ testFolder=$1/testcase
 mainClass=$2
 input=$3
 expectedOutput=$4
-
-rm $testFolder/output.txt
-rm $testFolder/runtime.txt
+rm $testFolder -rf
+mkdir $testFolder
 touch $testFolder/output.txt
 touch $testFolder/runtime.txt
 chmod 777 $testFolder/output.txt
@@ -21,13 +20,13 @@ timeout 2s java -classpath $groupFolder $mainClass $input 1> $testFolder/output.
 actualOuput=$(cat $testFolder/output.txt)
 if(-z "$actualOuput")
 then
-	echo "TIMEOUT"
+	echo -n "TIMEOUT"
 else
 
 	if("$actualOuput" == "$expectedOuput")
 	then
-		echo "PASS"
+		echo -n "PASS"
 	else
-		echo "FAIL"
+		echo -n "FAIL"
 	fi
 fi

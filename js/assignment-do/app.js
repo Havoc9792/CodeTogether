@@ -45,21 +45,28 @@ var saveCode = function(group_id){
 								terminalOutput(arr.content);
 								terminalOutput("THIS LINE INDICATES THE END...");
 								
-								$.post("/apiv2/run-aggainst-testcase.php", {group_id: group_id},function(res){
-									var testcaseArray = JSON.parse(res);
-									//$.each(testcaseArray,function(key,value){
-										//terminalOuput("Test Case ID : "value.id + " Result : " + value.resultType);
-									//});
-										//terminalOuput(testcaseArray);
-								});
-								terminalOutput("THIS LINE INDICATES THE END OF RUN-AGAINST-TESTCASES...");	
-								
 							}else{	                        
 								socket.emit("msg", {group_id: group_id, name: user_name, user_id: user_id, action: 'running-success'});
 								terminalOutput("Run Successfully!...");
 							                        		
 								terminalOutput(arr.content);
-								terminalOutput("THIS LINE INDICATES THE END...");											
+								terminalOutput("THIS LINE INDICATES THE END...");
+								
+								$.post("/apiv2/run-against-testcase.php", {group_id: group_id},function(result){
+									var testcaseArray = JSON.parse(result);
+									//terminalOutput(testcaseArray.resultType);
+									for(var i=0;i<testcaseArray.length;i++){
+										terminalOutput("Test Case ID : " + testcaseArray[i].id + " Result : " + testcaseArray[i].resultType);
+										
+									}
+									//terminalOutput(testcaseArray[0].id);
+									/* It Works
+									$.each(testcaseArray,function(key,value){
+										terminalOutput("Test Case ID : "+value.id + " Result : " + value.resultType);
+									});
+									*/
+									terminalOutput("THIS LINE INDICATES THE END OF RUN-AGAINST-TESTCASES...");	
+								});											
 							}
 						});
                         

@@ -135,10 +135,11 @@ class assignment extends mysql{
 		$path = "/var/www/html2/code";
 		$folder = "/var/www/html2/code/".$_POST['group_id'];
 		$testcases = "/var/www/html2/code/".$_POST['group_id']."/testcases";
-			if(file_exists($file)){
-				$this->rrmdir($file);
-			}
-			mkdir($file);
+		//$testcases1 = "../code/".$_POST['group_id']."/testcases";
+			//if(file_exists($testcases1)){
+			//	$this->rrmdir($testcases1);
+			//}
+			//mkdir($testcases1);
 			$sql = "SELECT * FROM assignment_testcase AT JOIN assignment_group as AG ON AG.assignment_id = AT.assignment_id where AG.group_id = '{$group_id}'";
 			$result = $this->query($sql);
 			$inputs = array();
@@ -150,26 +151,26 @@ class assignment extends mysql{
 			while($row = $result->fetch_assoc()){
 				$inputs[] = $row['input'];
 				$expectedOutputs[] = $row['output'];
-				$comments[] = $row['comment'];
+				//$comments[] = $row['comment'];
 				$descriptions[] = $row['description'];
 				$ids[] = $row['testcase_id'];
 				//file_put_contents($testcases . "/inputs.txt", $row['input']);	
 				//file_put_contents($testcases . "/output.txt", $row['output']);	
 				//file_put_contents($testcases . "/comment.txt", $row['comment']);	
 				//file_put_contents($testcases . "/description.txt", $row['description']);
-			
 			}	
 			
 				$command = "sh $path/mainClass.sh $folder";
 				$mainClass = shell_exec($command);
-				$mainClass = explode("@@@@@@@@@@", $output);
-				$mainClass = $output[1];
+				$mainClass = explode("@@@@@@@@@@", $mainClass);
+				$mainClass = $mainClass[1];
 				if($mainClass == ""){
 					echo "Error: Cannot find Java Main Class<br />";
 					}
-				$mainClass = explode("/", $output);
-				$mainClass = $output[sizeof($output)-1];
+				$mainClass = explode("/", $mainClass);
+				$mainClass = $mainClass[sizeof($mainClass)-1];
 				$testcaseResults = array();
+				$counter = 0;
 				foreach($inputs as $input){
 					$temp = $expectedOutputs[$counter];
 					$commandRun = "sh $path/testcase.sh '$folder' '$mainClass' '$input' '$temp' ";
@@ -184,11 +185,16 @@ class assignment extends mysql{
 						case "FAIL":
 							$testcaseResults[] = array('id' => $ids[$counter],'resultType' => "FAIL");
 						break;
+						default:
+							$dummy = $run;
+							break;
 						
 					}
 					$counter++;
 				}
+				//return json_encode(array('id' => $ids[0],'inputs' => $inputs[0]));
 				return json_encode($testcaseResults);
+				//return $dummy;
 			
 		}
     }
