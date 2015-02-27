@@ -56,7 +56,8 @@ var saveCode = function(group_id){
 									var testcaseArray = JSON.parse(result);
 									//terminalOutput(testcaseArray.resultType);
 									for(var i=0;i<testcaseArray.length;i++){
-										terminalOutput("Test Case ID : " + testcaseArray[i].id + " Result : " + testcaseArray[i].resultType);
+										terminalOutput("Test Case ID : " + testcaseArray[i].id + " Result : " + testcaseArray[i].resultType + " Question Type : " + testcaseArray[i].type);
+										terminalOutput(" Description : " + testcaseArray[i].description );
 										
 									}
 									//terminalOutput(testcaseArray[0].id);

@@ -146,6 +146,7 @@ class assignment extends mysql{
 			$expectedOutputs = array();
 			$comments = array();
 			$descriptions = array();
+			$types[] = array();
 			$ids = array();
 			$counter = 0;
 			while($row = $result->fetch_assoc()){
@@ -153,6 +154,7 @@ class assignment extends mysql{
 				$expectedOutputs[] = $row['output'];
 				//$comments[] = $row['comment'];
 				$descriptions[] = $row['description'];
+				$types[] = $row['type'];
 				$ids[] = $row['testcase_id'];
 				//file_put_contents($testcases . "/inputs.txt", $row['input']);	
 				//file_put_contents($testcases . "/output.txt", $row['output']);	
@@ -177,13 +179,13 @@ class assignment extends mysql{
 					$run = shell_exec($commandRun);
 					switch($run){
 						case "TIMEOUT":
-							$testcaseResults[] = array('id' => $ids[$counter],'resultType' => "TIMEOUT");
+							$testcaseResults[] = array('id' => $ids[$counter],'resultType' => "TIMEOUT",'description' => $descriptions[$counter],'type' => $types[$counter]);
 						break;
 						case "PASS":
-							$testcaseResults[] = array('id' => $ids[$counter],'resultType' => "PASS");
+							$testcaseResults[] = array('id' => $ids[$counter],'resultType' => "PASS",'description' => $descriptions[$counter],'type' => $types[$counter]);
 						break;
 						case "FAIL":
-							$testcaseResults[] = array('id' => $ids[$counter],'resultType' => "FAIL");
+							$testcaseResults[] = array('id' => $ids[$counter],'resultType' => "FAIL",'description' => $descriptions[$counter],'type' => $types[$counter]);
 						break;
 						default:
 							$dummy = $run;
