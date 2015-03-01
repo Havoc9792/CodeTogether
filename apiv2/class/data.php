@@ -51,4 +51,18 @@ class data extends mysql{
 			return json_encode($data);
 		}
 	}
+	
+	public function getTestcaseData($group_id) {
+		if(isset($group_id)){
+			$sql = "SELECT result, COUNT(*) as compile_no FROM testcase_data WHERE group_id = '{$group_id}' GROUP BY result";
+			$result = $this->query($sql);
+			$data = array();
+			if ($result->num_rows != 0){
+				while($row = $result->fetch_assoc()){
+					$data[] = $row;
+				}
+			}
+			return json_encode($data);
+		}
+	}
 }

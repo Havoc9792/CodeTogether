@@ -1,4 +1,5 @@
 var collabData;
+var testcaseData;
 
 function init_code_hierarchy_plot(element_id,data,count_function,color_function,title_function,legend_function)
 {
@@ -246,6 +247,15 @@ function init_plots()
 			collabData = $.parseJSON(res);
 		}  
 	}); 
+	$.ajax({  
+		type : "post",  
+		url : "/apiv2/get-compile-data.php",  
+		data : "group_id=" + group_id,  
+		async : false,  
+		success : function(res){
+			testcaseData = $.parseJSON(res);
+		}  
+	}); 
 	calculate_total();
 	plot_data ("code");
 }
@@ -267,6 +277,8 @@ function plot_data (datatype){
 		var code_hierarchy_data = create_com_data();
 	}else if (datatype == "code"){
 		var code_hierarchy_data = create_code_data();
+	}else if (datatype == "testcase"){
+		var code_hierarchy_data = create_testcase_data();
 	}
 	
 	d3.select("#code_hierarchy").transition().duration(500).style("opacity","0").each("end", function(){
@@ -313,6 +325,26 @@ function create_com_data (){
 	return hierarchy_data;
 }
 
+function create_testcase_data (){
+	var hierarchy_data;
+	var arr = [];
+	var groupTotal = 0;
+	$.each(testcaseData, function(i, item){
+		var temp = [
+						item['result'], 
+						[item['compile_no']],
+						{}
+					];
+		arr[item['result']] = temp;
+		groupTotal += parseInt(item['testcase_no']);
+	});
+	hierarchy_data = ["Total Compilation", [groupTotal], arr];
+	
+	document.getElementById("title").innerHTML = "Testcase";
+	
+	return hierarchy_data;
+}
+
 function create_code_data (){
 	var hierarchy_data;
 	var arr = [];
@@ -336,14 +368,20 @@ function create_code_data (){
 function calculate_total (){
 	var totalCode = 0;
 	var totalMessage = 0;
+	var totalCompilation = 0;
 	$.each(collabData, function(i, item){
 		totalCode+=parseInt(item['code_no']);
 		totalMessage+=parseInt(item['text_msg_no']) + parseInt(item['voice_msg_no']) + parseInt(item['drawing_no']);
 	});
+	$.each(testcaseData, function(i, item){
+		totalCompilation+=parseInt(item['compile_no']);
+	});
 	var codeNo = document.getElementById("code");
 	var messageNo = document.getElementById("communication");
+	var compileNo = document.getElementById("testcase");
 	codeNo.innerHTML = totalCode + " lines of code";
 	messageNo.innerHTML = totalMessage + " messages";
+	compileNo.innerHTML = totalCompilation + " compilations";
 }
 
 

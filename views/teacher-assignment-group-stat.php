@@ -150,7 +150,7 @@ $group_id = $param2;
 							<div class="row-xs-height">
 							  <div class="col-xs-height col-top">
 								<div class="p-l-20 p-t-15">
-								  <h3 class="no-margin p-b-5 text-white" id="testcase">23 compilations</h3>
+								  <h3 class="no-margin p-b-5 text-white" id="testcase"></h3>
 								  <div class="pull-left small">
 									  <span>ERR</span>
 									  <span class=" text-danger font-montserrat">

@@ -192,6 +192,8 @@ class assignment extends mysql{
 							break;
 						
 					}
+					$sql2 = "INSERT INTO testcase_data (group_id, result, testcase_id) VALUES ('{$group_id}', '{$run}', '{$ids[$counter]}')";
+					$this->query($sql2);
 					$counter++;
 				}
 				//return json_encode(array('id' => $ids[0],'inputs' => $inputs[0]));
