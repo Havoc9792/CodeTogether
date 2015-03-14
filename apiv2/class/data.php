@@ -65,4 +65,32 @@ class data extends mysql{
 			return json_encode($data);
 		}
 	}
+	
+	public function getFailData ($testcase_id){
+		if(isset($group_id)){
+			$sql = "SELECT COUNT(*) as fail FROM testcase_data WHERE result = 'FAIL' ";
+			$result = $this->query($sql);
+			$data = array();
+			if ($result->num_rows != 0){
+				while($row = $result->fetch_assoc()){
+					$data[] = $row;
+				}
+			}
+			return json_encode($data);
+		}
+	}
+	
+	public function getPassData ($testcase_id){
+		if(isset($group_id)){
+			$sql = "SELECT (CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 as pass_no FROM testcase_data) as pass WHERE result = 'PASS' AND testcase_id = '{$testcase_id}' GROUP BY group_id";
+			$result = $this->query($sql);
+			$data = array();
+			if ($result->num_rows != 0){
+				while($row = $result->fetch_assoc()){
+					$data[] = $row;
+				}
+			}
+			return json_encode($data);
+		}
+	}
 }

@@ -146,7 +146,7 @@ $course = $courseAPI->info();
 						Group Statistics
 					</a>	
 					
-					<a href="<?= $router->generate('assignment_stat', array('assignment_id' => $assignment['assignment_id']) ) ?>" class="btn btn-lg btn-block btn-info m-b-10">
+					<a href="<?= $router->generate('overall_stat', array('assignment_id' => $assignment['assignment_id']) ) ?>" class="btn btn-lg btn-block btn-info m-b-10">
 						Overall Statistics
 					</a>
 					

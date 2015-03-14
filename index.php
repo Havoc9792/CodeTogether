@@ -32,6 +32,7 @@ $router->map('GET', '/assignment/add/[i:course_id]/', 'View::render#Assignment_N
 $router->map('GET', '/assignment/edit/[i:assignment_id]/', 'View::render#Assignment_Edit', 'assignment_edit');
 $router->map('GET', '/assignment/edit/testcase/[i:assignment_id]/', 'View::render#Assignment_Testcase_Edit', 'assignment_edit_testcase');
 
+$router->map('GET', '/statistics/overall/[i:assignment_id]/', 'View::render#Assignment_Overall_Statistics', 'overall_stat');
 $router->map('GET', '/statistics/[i:assignment_id]/', 'View::render#Assignment_Statistics', 'assignment_stat');
 $router->map('GET', '/statistics/[i:assignment_id]/group/[i:group_id]/', 'View::render#Assignment_Group_Statistics', 'assignment_group_stat');
 

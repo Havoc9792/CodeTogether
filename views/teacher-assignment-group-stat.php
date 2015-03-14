@@ -29,10 +29,7 @@ $group_id = $param2;
 	cursor: pointer;
 }
 </style>
-<script type="text/javascript">
-	//gp_id = <?= $group_id ?>;
-</script>
-<script type="text/javascript" src="/js/data/visualization.js"></script>
+<script type="text/javascript" src="/js/data/group-data.js"></script>
 <!-- START PAGE CONTENT WRAPPER -->
 <div class="page-content-wrapper">
     <!-- START PAGE CONTENT -->
@@ -136,7 +133,7 @@ $group_id = $param2;
 					<div class="row">
 					  <div class="col-md-12 m-b-10">
 						<!-- START WIDGET -->
-						<div class="widget-9 panel no-border bg-success no-margin widget-loader-bar">
+						<div class="widget-9 panel no-border bg-success no-margin widget-loader-bar" onclick = "plot_data('testcase')">
 						  <div class="container-xs-height full-height">
 							<div class="row-xs-height">
 							  <div class="col-xs-height col-top">

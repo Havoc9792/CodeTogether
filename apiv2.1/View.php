@@ -136,7 +136,18 @@ class View{
 					$config['script'] = ["teacher-assignment-group-stat"];
 					require dirname(__DIR__) . '/views/teacher-assignment-group-stat.php';
 				}			
-				break;										
+				break;
+			
+			case "Assignment_Overall_Statistics":	
+				$assignment_id = $param1;	
+				require_once __DIR__ . '/Assignment.php';			
+				if(User::isStudent()){		
+					die();
+				}elseif(User::isTeacher()){
+					$config['script'] = ["teacher-assignment-overall-stat"];
+					require dirname(__DIR__) . '/views/teacher-assignment-overall-stat.php';
+				}			
+				break;	
 								
 		}					
 		
