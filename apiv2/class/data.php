@@ -67,8 +67,8 @@ class data extends mysql{
 	}
 	
 	public function getFailData ($testcase_id){
-		if(isset($group_id)){
-			$sql = "SELECT COUNT(*) as fail FROM testcase_data WHERE result = 'FAIL' ";
+		if(isset($testcase_id)){
+			$sql = "SELECT COUNT(*) as fail FROM testcase_data WHERE result = 'FAIL' AND testcase_id = '{$testcase_id}' GROUP BY group_id";
 			$result = $this->query($sql);
 			$data = array();
 			if ($result->num_rows != 0){
@@ -81,8 +81,22 @@ class data extends mysql{
 	}
 	
 	public function getPassData ($testcase_id){
-		if(isset($group_id)){
-			$sql = "SELECT (CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 as pass_no FROM testcase_data) as pass WHERE result = 'PASS' AND testcase_id = '{$testcase_id}' GROUP BY group_id";
+		if(isset($testcase_id)){
+			$sql = "SELECT (CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END) as pass FROM testcase_data WHERE result = 'PASS' AND testcase_id = '{$testcase_id}' GROUP BY group_id";
+			$result = $this->query($sql);
+			$data = array();
+			if ($result->num_rows != 0){
+				while($row = $result->fetch_assoc()){
+					$data[] = $row;
+				}
+			}
+			return json_encode($data);
+		}
+	}
+	
+	public function getTestcase ($assignment_id){
+		if(isset($assignment_id)){
+			$sql = "SELECT testcase_id, input, output, type, description FROM assignment_testcase WHERE assignment_id = '{$assignment_id}'";
 			$result = $this->query($sql);
 			$data = array();
 			if ($result->num_rows != 0){
