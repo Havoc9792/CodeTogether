@@ -18,7 +18,7 @@ $('body').on("click", "a#clear-drawing", function(){
 	var canvas = $("canvas#colors_sketch")[0];
 	var pic = canvas.getContext('2d');
 	$('#colors_sketch').remove();
-	$('#quickview-draw').prepend("<canvas id='colors_sketch' height='880' width='659' style='height: 880px;'></canvas>");
+	$('#quickview-draw .relative').prepend("<canvas id='colors_sketch' height='880' width='659' style='height: 880px;'></canvas>");
 	$('#colors_sketch').sketch();
 	
 	//pic.clearRect(0,0,canvas.width,canvas.height);
