@@ -18,11 +18,12 @@ do
 echo $c > $2/temp.txt
 echo "Result for Test Case $counter with input(s) : $c \n" >> $2/output.txt
 timeout 3s java -classpath $2 $file 0< $2/temp.txt 1> $2/tempoutput.txt 2> $2/debug/errorplaceholder.txt
-if [ -z $2/debug/errorplaceholder.txt && -z $2/tempoutput.txt ]
+status=$?
+if [ "$status" = "124" ]
 then
-	echo "EXECUTION TIMEOUT,IT TAKES MORE THAN 3S TO EXECUTE IT!" >> $2/output.txt
+	echo "EXECUTION TIMEOUT,IT TAKES MORE THAN 3S TO EXECUTE IT!\n" >> $2/output.txt
 else
-	if [ -s $2/debug/errorplaceholder.txt]
+	if [ -s $2/debug/errorplaceholder.txt ]
 	then
 		cat $2/debug/errorplaceholder.txt >> $2/debug/runtime.txt
 		cat $2/debug/errorplaceholder.txt >> $2/output.txt

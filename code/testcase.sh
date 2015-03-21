@@ -18,9 +18,9 @@ touch $testFolder/error.txt
 echo $input > $testFolder/input.txt
 echo "MainClass : $2 \nInput : $3 \nExpectedOutput : $4" >> $testFolder/temp.txt
 timeout 3s java -classpath $groupFolder $mainClass 0<$testFolder/input.txt 1> $testFolder/output.txt 2> $testFolder/error.txt
-
+status=$?
 actualOutput=$(cat $testFolder/output.txt)
-if [ -z "$actualOutput" ]
+if [ "$status" = "124" ]
 then
 	echo -n "TIMEOUT"
 else
