@@ -51,6 +51,7 @@ var saveCode = function(group_id){
 							                        		
 								terminalOutput(arr.content);
 								terminalOutput("THIS LINE INDICATES THE END...");
+									$("#testcase-anly").click();
 								
 								$.post("/apiv2/run-against-testcase.php", {group_id: group_id},function(result){
 									var testcaseArray = JSON.parse(result);
@@ -58,7 +59,22 @@ var saveCode = function(group_id){
 									for(var i=0;i<testcaseArray.length;i++){
 										terminalOutput("Test Case ID : " + testcaseArray[i].id + " Result : " + testcaseArray[i].resultType + " Question Type : " + testcaseArray[i].type);
 										terminalOutput(" Description : " + testcaseArray[i].description );
-										
+										change_testcase_ui_on_delay(testcaseArray[i].id,testcaseArray[i].resultType,1000 + i*1000);
+										/*
+										switch(testcaseArray[i].resultType){
+											case "PASS":
+											testcase_ui_change_to(testcaseArray[i].id,testcase_ui_success);
+											break;
+											case "FAIL":
+											testcase_ui_change_to(testcaseArray[i].id,testcase_ui_error);
+											break;
+											case "TIMEOUT":
+											testcase_ui_change_to(testcaseArray[i].id,testcase_ui_warning);
+											break;
+											default:
+											break;
+										}
+										*/
 									}
 									//terminalOutput(testcaseArray[0].id);
 									/* It Works
@@ -66,7 +82,8 @@ var saveCode = function(group_id){
 										terminalOutput("Test Case ID : "+value.id + " Result : " + value.resultType);
 									});
 									*/
-									terminalOutput("THIS LINE INDICATES THE END OF RUN-AGAINST-TESTCASES...");	
+									terminalOutput("THIS LINE INDICATES THE END OF RUN-AGAINST-TESTCASES...");
+										
 								});											
 							}
 						});
@@ -80,9 +97,30 @@ var saveCode = function(group_id){
         });
     }, 1000);
 };
-
+function change_testcase_ui_on_delay(id,type,delay){
+										switch(type){
+											case "PASS":
+											setTimeout(function(){testcase_ui_change_to(id,testcase_ui_success);}, delay);
+											break;
+											case "FAIL":
+											setTimeout(function(){testcase_ui_change_to(id,testcase_ui_error);}, delay);
+											break;
+											case "TIMEOUT":
+											setTimeout(function(){testcase_ui_change_to(id,testcase_ui_warning);}, delay);
+											break;
+											default:
+											break;
+										}
+}
 $("#compile").click(function(){
+	if(!$("#testcase-anly-content").hasClass('hidden')){
+		$("#testcase-anly-content").fadeOut(function(){
+			$(this).addClass('hidden');
+		});
+	}else{
+	}
 	saveCode(group_id);
+	
 });
 
 
