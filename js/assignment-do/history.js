@@ -38,7 +38,9 @@ var fileHistory = function(editor_id){
        	//console.log(res); 
        	
        	var html = "";
-		$.each($.parseJSON(res), function(i, item){	
+       	res = $.parseJSON(res);
+       	console.log(res.reverse);
+		$.each(res.reverse(), function(i, item){	
 			html += '<tr>';
 			html += '<td class="v-align-middle semi-bold">'+item.save_time+'</td>';
 			html += '<td class="v-align-middle">'+item.name+'</td>';
