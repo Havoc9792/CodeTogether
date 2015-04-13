@@ -146,7 +146,7 @@ class assignment extends mysql{
 			$expectedOutputs = array();
 			$comments = array();
 			$descriptions = array();
-			$types[] = array();
+			$types = array();
 			$ids = array();
 			$counter = 0;
 			while($row = $result->fetch_assoc()){
