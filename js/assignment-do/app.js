@@ -51,10 +51,11 @@ var saveCode = function(group_id){
 							                        		
 								terminalOutput(arr.content);
 								terminalOutput("THIS LINE INDICATES THE END...");
-									$("#testcase-anly").click();
 								
 								$.post("/apiv2/run-against-testcase.php", {group_id: group_id},function(result){
 									var testcaseArray = JSON.parse(result);
+									if(testcaseArray.length != 0)
+										$("#testcase-anly").click();
 									//terminalOutput(testcaseArray.resultType);
 									for(var i=0;i<testcaseArray.length;i++){
 										terminalOutput("Test Case ID : " + testcaseArray[i].id + " Result : " + testcaseArray[i].resultType + " Question Type : " + testcaseArray[i].type);

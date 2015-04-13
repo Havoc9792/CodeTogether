@@ -23,6 +23,7 @@ if($output == ""){
 
 $output = explode("/", $output);
 $output = $output[sizeof($output)-1];
+//echo json_encode(array('resultType' => "0",'content' => "sadasd"));
 
 $commandRun = "sh $path/java.sh '$output' '$folder' ";
 $run = shell_exec($commandRun);
