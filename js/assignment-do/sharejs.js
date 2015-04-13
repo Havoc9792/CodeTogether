@@ -21,10 +21,23 @@ var shareJSConnect = function(editor, group_id, is_textarea){
     });
 };
 
+var updateCursor = function(editor){
+	window.activeEditor = editor;
+	window.cursorPosition = editor.getCursorPosition();
+}
+
+var cursorTimer = setTimeout(function(){
+	window.cursorPosition = window.activeEditor.getCursorPosition();
+	window.activeEditor.setCursorPosition(window.cursorPosition);
+}, 100);
+
 var shareJsInit = function(group_id, editor_id){
 	var editor = ace.edit(editor_id);
 	editor.setTheme("ace/theme/monokai");
 	editor.getSession().setMode("ace/mode/java");
+    editor.getSession().on('change', function(e) {
+		window.activeEditor = editor;
+	});	
 	editor.setShowPrintMargin(false);	
 	shareJSConnect(editor, "code-group-"+group_id+"-"+editor_id);
 };
@@ -32,6 +45,7 @@ var shareJsInit = function(group_id, editor_id){
 $(".ace_editor").each(function(){
 	var id = $(this).attr("id");
 	shareJsInit(group_id, id);
+	
 });
 
 var terminalOutput = function(output, isReset){
@@ -41,6 +55,8 @@ var terminalOutput = function(output, isReset){
     window.terminalOutputValue += output + "\n";
     terminal.setValue(window.terminalOutputValue, 1);
 }
+
+$(".ace_editor", ".content .row .tab-pane.active").attr('id');
 
 /*
 var editor = ace.edit("editor");
