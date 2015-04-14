@@ -174,7 +174,7 @@ li.tab-li:hover i.delete-tab{
 					</div>
 
 					<div id="testcase-anly-content" class="bg-white hidden" style="position: absolute; height: calc( 100% - 45px ); width: 100%; top: 0px; left: 0; z-index: 100">
-						<?= include_once 'temp-testcase.php'; ?>
+						<?php include_once 'temp-testcase.php'; ?>
 					</div>
 					
 					<!-- END View Header !-->

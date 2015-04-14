@@ -1,7 +1,7 @@
 
 var saveCode = function(group_id){
     //windowLayout('terminal');
-    terminalOutput("Pushing Code to Server...", true);                        
+    terminalOutput("Saving Code to Server...", true);                        
     socket.emit("msg", {group_id: group_id, name: user_name, user_id: user_id, action: 'compile'});
     
     setTimeout(function(){
@@ -43,14 +43,14 @@ var saveCode = function(group_id){
 								terminalOutput("Running Exception!...");
 							                        		
 								terminalOutput(arr.content);
-								terminalOutput("THIS LINE INDICATES THE END...");
+								terminalOutput("Running againist test case");
 								
 							}else{	                        
 								socket.emit("msg", {group_id: group_id, name: user_name, user_id: user_id, action: 'running-success'});
 								terminalOutput("Run Successfully!...");
 							                        		
 								terminalOutput(arr.content);
-								terminalOutput("THIS LINE INDICATES THE END...");
+								terminalOutput("Running againist test case");
 								
 								$.post("/apiv2/run-against-testcase.php", {group_id: group_id},function(result){
 									var testcaseArray = JSON.parse(result);
@@ -58,8 +58,10 @@ var saveCode = function(group_id){
 										$("#testcase-anly").click();
 									//terminalOutput(testcaseArray.resultType);
 									for(var i=0;i<testcaseArray.length;i++){
-										terminalOutput("Test Case ID : " + testcaseArray[i].id + " Result : " + testcaseArray[i].resultType + " Question Type : " + testcaseArray[i].type);
-										terminalOutput(" Description : " + testcaseArray[i].description );
+										terminalOutput("Test Case #: " + i);
+										terminalOutput("Result: " + testcaseArray[i].resultType);
+										terminalOutput("Test Type: " + testcaseArray[i].type);
+										terminalOutput("Teacher's Comment : " + testcaseArray[i].description );
 										change_testcase_ui_on_delay(testcaseArray[i].id,testcaseArray[i].resultType,1000 + i*1000);
 										/*
 										switch(testcaseArray[i].resultType){
@@ -83,7 +85,7 @@ var saveCode = function(group_id){
 										terminalOutput("Test Case ID : "+value.id + " Result : " + value.resultType);
 									});
 									*/
-									terminalOutput("THIS LINE INDICATES THE END OF RUN-AGAINST-TESTCASES...");
+									terminalOutput("");
 										
 								});											
 							}

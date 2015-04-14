@@ -25,7 +25,7 @@ $testcaseAPI = new Testcase();
 					<?php
 					endforeach;	
 					?>	
-					
+					<!--
 					<tr data-testcase-id="2">
 						<td class="v-align-middle semi-bold">1</td>
 						<td class="v-align-middle">Logic Error</td>
@@ -42,7 +42,8 @@ $testcaseAPI = new Testcase();
 						<td class="v-align-middle semi-bold">1</td>
 						<td class="v-align-middle">Logic Error</td>
 						<td class="indicator v-align-middle semi-bold"><i class="fa fa-times-circle danger"></i></td>						
-					</tr>																		
+					</tr>	
+					-->																	
 				</tbody>
 			</table>
 		</div>
