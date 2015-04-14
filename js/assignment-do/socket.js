@@ -26,6 +26,11 @@ socket.on("user leave", function(data){
     }
 });
 
+socket.on("func", function(data){
+   console.log(data.action);
+   eval(data.action);   
+});
+
 socket.on("msg", function(data){
    console.log(data);
    switch(data.action){
@@ -68,8 +73,13 @@ socket.on("msg", function(data){
 	   case "testcase_ui_load_all":
 		   	testcase_ui_load_all();
 	   		break;		   		   			   					   						   					   			       	
-	   case "testcase_ui_load_all":
-		   	testcase_ui_change_to(data.testcase_id, data.testcase_type);
-	   		break;		   		
+	   case "testcase_ui_change_to":
+		   	testcase_ui_change_to(data.param.testcase_id, data.param.testcase_type);
+	   		break;	
+	   case "function":
+	   		data.func;
+	   		console.log(data.func);
+	   		console.log("Function received");
+	   		break;	   		
    } 
 });

@@ -55,13 +55,15 @@ var saveCode = function(group_id){
 								$.post("/apiv2/run-against-testcase.php", {group_id: group_id},function(result){
 									var testcaseArray = JSON.parse(result);
 									if(testcaseArray.length != 0)
-										$("#testcase-anly").click();
+										socket.emit("func", {group_id: group_id, user_name: user_name, user_id: user_id, action: ' $("#testcase-anly").click(); '});
+										
 									//terminalOutput(testcaseArray.resultType);
 									for(var i=0;i<testcaseArray.length;i++){
 										terminalOutput("Test Case #: " + i);
 										terminalOutput("Result: " + testcaseArray[i].resultType);
 										terminalOutput("Test Type: " + testcaseArray[i].type);
 										terminalOutput("Teacher's Comment : " + testcaseArray[i].description );
+										
 										change_testcase_ui_on_delay(testcaseArray[i].id,testcaseArray[i].resultType,1000 + i*1000);
 										/*
 										switch(testcaseArray[i].resultType){
