@@ -36,6 +36,8 @@ $router->map('GET', '/statistics/overall/[i:assignment_id]/', 'View::render#Assi
 $router->map('GET', '/statistics/[i:assignment_id]/', 'View::render#Assignment_Statistics', 'assignment_stat');
 $router->map('GET', '/statistics/[i:assignment_id]/group/[i:group_id]/', 'View::render#Assignment_Group_Statistics', 'assignment_group_stat');
 
+$router->map('GET', '/datamining/[i:assignment_id]/', 'View::render#Assignment_Data_Mining', 'data_mining');
+
 //Assignment Do
 $router->map('GET', '/assignment/do/[i:assignment_id]/', 'View::render#Assignment_Do', 'assignment_do');
 

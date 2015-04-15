@@ -152,7 +152,11 @@ $course = $courseAPI->info();
 					
 					<a href="<?= $router->generate('assignment_edit_testcase', array('assignment_id' => $assignment['assignment_id']) ) ?>" class="btn btn-lg btn-block btn-info m-b-10">
 						Testcase Management
-					</a>																									
+					</a>	
+					
+					<a href="<?= $router->generate('data_mining', array('assignment_id' => $assignment['assignment_id']) ) ?>" class="btn btn-lg btn-block btn-info m-b-10">
+						Data Mining
+					</a>																													
 					
 					<div class="panel panel-default">
 						<div class="panel-heading separator">

@@ -148,6 +148,17 @@ class View{
 					require dirname(__DIR__) . '/views/teacher-assignment-overall-stat.php';
 				}			
 				break;	
+				
+			case "Assignment_Data_Mining":	
+				$assignment_id = $param1;	
+				require_once __DIR__ . '/Assignment.php';			
+				if(User::isStudent()){		
+					die();
+				}elseif(User::isTeacher()){
+					$config['script'] = ["teacher-datamining"];
+					require dirname(__DIR__) . '/views/teacher-datamining.php';
+				}			
+				break;				
 								
 		}					
 		
