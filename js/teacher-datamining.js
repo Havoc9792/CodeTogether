@@ -2,7 +2,7 @@ $(function(){
 	$("a.btn").click(function(){
 		$(".overlay2").fadeIn();
 		var input = $("input").val();
-		$.getJSON("http://fyp2.mylife.hk/datamining/", {input: input}, function(res){
+		$.getJSON("http://fyp2.mylife.hk/datamining/", {input: input, assignment_id: assignment_id}, function(res){
 			var content = "";
 			for(var i=0; i<res.length; i++){
 				content += "Label: " + res[i][0] + "<br />";
