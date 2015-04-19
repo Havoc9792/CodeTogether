@@ -6,6 +6,19 @@ $course_id = $assignment['course_id'];
 $courseAPI = new course($course_id);
 $course = $courseAPI->info();	
 ?>
+<style>
+.overlay2{
+	position: fixed;
+	background: rgba(255,255,255,0.5) url("/img/ajax-loader.gif") no-repeat no-repeat center center;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 10000;
+	display: none;
+}	
+</style>
+<div class="overlay2"></div>
 
 <!-- START PAGE CONTENT WRAPPER -->
 <div class="page-content-wrapper">
@@ -42,41 +55,31 @@ $course = $courseAPI->info();
 		
 			<div class="row">
 			
-				<?php
-				foreach($assignmentAPI->groupList($assignment['assignment_id']) as $group ):	
-				?>
-				
-				<div class="col-md-4 sm-no-padding">
-					<div class="panel panel-transparent">
-						<div class="panel-body no-padding">
-							<a href="<?= $router->generate('assignment_group_stat', array('group_id' => $group[0]['group_id'], 'assignment_id' => $assignment['assignment_id'] ) ) ?>" style="color: inherit">
-								<div id="portlet-advance" class="panel panel-default">				
-									<div class="panel-body">
-										<h3>
-											<span class="semi-bold">GROUP <?= $group[0]['group_id'] ?></span>
-										</h3>
-										<div>
-											<div class="inline m-l-10">
-												<?php
-												foreach($group as $student):
-												?>   
-													<p class="small hint-text m-t-5">
-														<?= $student['name'] ?><br>
-													</p>
-												<?php
-												endforeach;    
-												?>	
-											</div>
-										</div>
-									</div>
-								</div>
-							</a>
+			<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="panel-title">
+						Testcase Data Mining
+						</div>	
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-8">
+								<div class="form-group form-group-default required">
+		                            <label>New Testcase Input</label>
+		                            <input type="text" name="input" placeholder="" class="input-lg form-control">
+	                          	</div>												
+							</div>	
+							<div class="col-md-4">								
+		                        <a href="#" class="btn btn-primary btn-block btn-lg" style="margin-top: 6px;">Start Mining</a>	                          													
+							</div>																																																				
 						</div>
-					</div>	                 
-				</div>
-				<?php
-				endforeach;	
-				?>
+						<div class="row">
+							<div class="col-md-12 pro">
+								
+							</div>
+						</div>
+	              	</div>
+	            </div>				
 				
 			</div>
 		
@@ -87,3 +90,4 @@ $course = $courseAPI->info();
     </div>
    </div>
     <!-- END PAGE CONTENT -->
+       
