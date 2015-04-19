@@ -44,7 +44,7 @@ $group_id = $param2;
 		<div class="container-fluid container-fixed-lg">
 		<!-- BEGIN PlACE PAGE CONTENT HERE -->
 			<div class="row">
-				<div class="col-md-4 col-lg-4 col-xlg-5 ">
+				<div class="col-md-6 col-lg-6 col-xlg-6 ">
 					<div class="row">
 					  <div class="col-md-12 m-b-10">
 						<!-- START WIDGET -->
@@ -56,30 +56,50 @@ $group_id = $param2;
 						<!-- END WIDGET -->
 					  </div>
 					</div>
-					<div class="row" style="margin-top: 100px;">
+					<div class="row">
 					  <div class="col-md-12 m-b-10">
 						<!-- START WIDGET -->
+						<div><h1>Detail</h1></div>
 						<div class="widget-12 panel no-border widget-loader-circle no-margin">
 						  <div class="panel-body" id="detailbox">
 								<table>
 									<tr>
-										<td><p>Input:</p></td>
+										<td><p><b>Input:</b></p></td>
 										<td><p id="input"></p></td>
 									</tr>
 									<tr>
-										<td><p>Output:</p></td>
+										<td><p><b>Output:</b></p></td>
 										<td><p id="output"></p></td>
 									</tr>
 									<tr>
-										<td><p>Type:</p></td>
+										<td><p><b>Type:</b></p></td>
 										<td><p id="type"></p></td>
 									</tr>
 									<tr>
-										<td><p>Description:</p></td>
+										<td><p><b>Description:</b></p></td>
 										<td><p id="desc"></p></td>
 									</tr>
 								</table>
 						   </div>
+						</div>
+						<div><h1>Statistics</h1></div>
+						<div class="widget-12 panel no-border widget-loader-circle no-margin">
+						   <div class="panel-body" id="detailbox">
+								<table>
+									<tr>
+										<td><p><b>Pass percentage:</b></p></td>
+										<td><p id="pass"></p></td>
+									</tr>
+									<tr>
+										<td><p><b>Avg. attempt:</b></p></td>
+										<td><p id="attempt"></p></td>
+									</tr>
+									<tr>
+										<td><p><b>Avg. attempt to pass:</b></p></td>
+										<td><p id="attempttopass"></p></td>
+									</tr>
+								</table>
+						  </div>
 						</div>
 					  </div>
 						<!-- END WIDGET -->
@@ -90,14 +110,7 @@ $group_id = $param2;
 					  <div class="col-md-12">
 						<!-- START WIDGET -->
 						<div class="widget-12 panel no-border widget-loader-circle no-margin">
-						  <div class="panel-body">
-							<div class="row">
-							  <div class="col-xlg-12 ">
-								<div class="p-l-10">
-								</div>
-							  </div>
-							</div>
-						  </div>
+						  
 						<!-- END WIDGET -->
 					  </div>
 					</div>

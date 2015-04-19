@@ -68,7 +68,7 @@ class data extends mysql{
 	
 	public function getFailData ($testcase_id){
 		if(isset($testcase_id)){
-			$sql = "SELECT COUNT(*) as fail FROM testcase_data WHERE result = 'FAIL' AND testcase_id = '{$testcase_id}' GROUP BY group_id";
+			$sql = "SELECT T1.group_id, COUNT(*) as fail FROM (SELECT group_id, MIN(data_id) AS min FROM testcase_data WHERE result = 'PASS' AND testcase_id = '{$testcase_id}' GROUP BY group_id) AS T1 LEFT JOIN (SELECT group_id, data_id FROM testcase_data WHERE result = 'FAIL' AND testcase_id = '{$testcase_id}') AS T2 ON T1.group_id = T2.group_id WHERE T2.data_id < T1.min GROUP BY group_id";
 			$result = $this->query($sql);
 			$data = array();
 			if ($result->num_rows != 0){
@@ -82,7 +82,21 @@ class data extends mysql{
 	
 	public function getPassData ($testcase_id){
 		if(isset($testcase_id)){
-			$sql = "SELECT (CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END) as pass FROM testcase_data WHERE result = 'PASS' AND testcase_id = '{$testcase_id}' GROUP BY group_id";
+			$sql = "SELECT group_id, COUNT(*) as pass FROM testcase_data WHERE result = 'PASS' AND testcase_id = '{$testcase_id}' GROUP BY group_id";
+			$result = $this->query($sql);
+			$data = array();
+			if ($result->num_rows != 0){
+				while($row = $result->fetch_assoc()){
+					$data[] = $row;
+				}
+			}
+			return json_encode($data);
+		}
+	}
+	
+	public function getAttemptData ($testcase_id){
+		if(isset($testcase_id)){
+			$sql = "SELECT group_id, COUNT(*) as attempt FROM testcase_data WHERE testcase_id = '{$testcase_id}' GROUP BY group_id";
 			$result = $this->query($sql);
 			$data = array();
 			if ($result->num_rows != 0){
@@ -105,6 +119,17 @@ class data extends mysql{
 				}
 			}
 			return json_encode($data);
+		}
+	}
+	
+	public function getAssignmentGroup ($assignment_id) {
+		if(isset($assignment_id)){
+			$sql = "SELECT COUNT(*) as groupno FROM assignment_group WHERE assignment_id = '{$assignment_id}'";
+			$result = $this->query($sql);
+			if ($result->num_rows != 0){
+				$row = $result->fetch_assoc();
+			}
+			return json_encode($row);
 		}
 	}
 }

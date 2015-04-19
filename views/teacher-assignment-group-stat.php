@@ -29,6 +29,7 @@ $group_id = $param2;
 	cursor: pointer;
 }
 </style>
+<script type="text/javascript" src="/js/data/visualization.js"></script>
 <script type="text/javascript" src="/js/data/group-data.js"></script>
 <!-- START PAGE CONTENT WRAPPER -->
 <div class="page-content-wrapper">
