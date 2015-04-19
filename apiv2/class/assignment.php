@@ -202,6 +202,150 @@ class assignment extends mysql{
 			
 		}
     }
+    
+    //DATAMINING
+    public function generateTrainingData($assignment_id,$input,$expectedOutput){
+		if(isset($assignment_id)){
+			$path = "/var/www/html2/datamining/";
+			if(file_exists($path)){
+				$this->rrmdir($path);
+			}
+			mkdir($path);
+			$sql = "SELECT DISTINCT(type) FROM assignment_testcase WHERE assignment_id = '{$assignment_id}'";
+			$result = $this->query($sql);
+			$types = array();
+			while($row = $result->fetch_assoc()){
+				$types[] = $row['type'];
+			}
+			$sql = "SELECT * FROM assignment_testcase WHERE assignment_id = '{$assignment_id}'";
+			$result = $this->query($sql);
+			$testcaseIDs = array();
+			$data = array();
+			if($result->num_rows != 0){
+				while($row = $result->fetch_assoc()){
+					$data[] = $row;
+				}
+				$sql = "SELECT DISTINCT(group_id) FROM testcase_data WHERE testcase_id = '{$data[0]['testcase_id']}'";
+				$result = $this->query($sql);
+				$counter = 0;
+				while($row = $result->fetch_assoc()){
+					$temp = $row['group_id'];
+					$counter++;
+				}
+				$content = "";
+				for($i = 1; $i <= $counter ; $i++){
+					$content .= "@ATTRIBUTE group" .$i. " REAL\n";
+				}
+				$content .= "@ATTRIBUTE class {";
+				for($i = 0;$i < sizeof($types) ; $i++){
+					$content .= $types[$i];
+					if($i != (sizeof($types) -1 )){
+						$content .= ",";
+						}
+				}
+				$content .= "}\n";
+				$content .= "@DATA\n";
+				$groupIDs = null;
+				foreach($data as $testcase){
+					$class = $testcase['type'];
+					$testcase_id = $testcase['testcase_id'];
+					$sql = "SELECT MAX(data_id),group_id,result FROM testcase_data WHERE testcase_id = '{$testcase_id}' GROUP BY group_id ORDER BY data_id DESC";
+					$result = $this->query($sql);
+					$groupIDs = array();
+					$results = array();
+					while($row = $result->fetch_assoc()){
+						$groupIDs[] = $row['group_id'];
+						$results[] = $row['result'];
+						$counter = 0;
+						foreach($groupIDs as $groupID){
+							switch($results[$counter]){
+								case "PASS":
+								$content .= "1,";
+								break;
+								case "FAIL":
+								$content .= "0,";
+								break;
+								case "TIMEOUT":
+								$content .= "0.5,";
+								break;
+								default:
+								break;
+							}
+							$counter++;
+						}
+						
+					}
+					$content .= $class;
+					$content .= "\n";
+				}
+				$content .= "%\n";
+				$content .= "%\n";
+				$content .= "%\n";
+				$file = $path."test.arff";
+				$bool = file_put_contents($file,$content);
+				generateNewTestCase($assignment_id,$input,$groupIDs,$expectedOutput,$types);
+				
+			}
+		
+		}
+		
+	}
+	public function generateNewTestCase($assignment_id,$input,$groupIDs,$expectedOutput,$types){
+		if(isset($assignment_id)){
+			$path = "/var/www/html2/datamining/";
+				$content = "";
+				for($i = 1; $i <= sizeof($groupIDs) ; $i++){
+					$content .= "@ATTRIBUTE group" .$i. " REAL\n";
+				}
+				$content .= "@ATTRIBUTE class {";
+				for($i = 0;$i < sizeof($types) ; $i++){
+					$content .= $types[$i];
+					if($i != (sizeof($types) -1 )){
+						$content .= ",";
+						}
+				}
+				$content .= "}\n";
+				$content .= "@DATA\n";
+			foreach($groupIDs as $groupID){
+				$path = "/var/www/html2/code";
+				$folder = "/var/www/html2/code/".$groupID;
+				$command = "sh $path/mainClass.sh $folder";
+				$mainClass = shell_exec($command);
+				$mainClass = explode("@@@@@@@@@@", $mainClass);
+				$mainClass = $mainClass[1];
+				if($mainClass == ""){
+					echo "Error: Cannot find Java Main Class<br />";
+					}
+				$mainClass = explode("/", $mainClass);
+				$mainClass = $mainClass[sizeof($mainClass)-1];
+				$commandRun = "sh $path/testcase.sh '$folder' '$mainClass' '$input' '$expectedOutput' ";
+					$run = shell_exec($commandRun);
+					switch($run){
+						case "TIMEOUT":
+							$content .= "0.5,";
+						break;
+						case "PASS":
+							$content .= "1,";
+						break;
+						case "FAIL":
+							$content .= "0,";
+						break;
+						default:
+							break;
+						
+					}
+					$content .= "?\n";
+					$content .= "%\n";
+					$content .= "%\n";
+					$content .= "%\n";
+					$file = $path."labeled.arff";
+					$bool = file_put_contents($file,$content);
+					return $bool;
+				
+			}
+			
+		}
+	}
     /*Depreciated
     public function testAssignment($group_id,$inputs){
 	    if(isset($group_id) && isset($inputs)){

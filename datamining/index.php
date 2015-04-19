@@ -6,6 +6,13 @@ $input = $_POST['input'];
 /**
 Tino's		
 */
+require("/var/www/html2/apiv2.1/Java.php");
+$javaAPI = new Java();
+$json = $javaAPI->compileAndRun($assignment_id,$input);
+$temp = json_decode($json);
+require("/var/www/html2/apiv2/class/assignment.php");
+$assignmentAPI = new assignment();
+$assignmentAPI->generateTrainingData($assignment_id,$input,$temp.content);
 	
 	
 	
