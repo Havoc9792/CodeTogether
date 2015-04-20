@@ -43,16 +43,15 @@ var saveCode = function(group_id){
 								terminalOutput("Running Exception!...");
 							                        		
 								terminalOutput(arr.content);
-								terminalOutput("Running againist test case");
 								
 							}else{	                        
 								socket.emit("msg", {group_id: group_id, name: user_name, user_id: user_id, action: 'running-success'});
 								terminalOutput("Run Successfully!...");
 							                        		
 								terminalOutput(arr.content);
-								terminalOutput("Running againist test case");
 								
 								$.post("/apiv2/run-against-testcase.php", {group_id: group_id},function(result){
+								terminalOutput("Running againist test case");
 									var testcaseArray = JSON.parse(result);
 									if(testcaseArray.length != 0)
 										socket.emit("func", {group_id: group_id, user_name: user_name, user_id: user_id, action: ' $("#testcase-anly").click(); '});
@@ -64,7 +63,7 @@ var saveCode = function(group_id){
 										terminalOutput("Test Type: " + testcaseArray[i].type);
 										terminalOutput("Teacher's Comment : " + testcaseArray[i].description );
 										
-										change_testcase_ui_on_delay(testcaseArray[i].id,testcaseArray[i].resultType,1000 + i*1000);
+										change_testcase_ui_on_delay(testcaseArray[i].id,testcaseArray[i].resultType,500 + i*500);
 										/*
 										switch(testcaseArray[i].resultType){
 											case "PASS":
@@ -93,14 +92,14 @@ var saveCode = function(group_id){
 							}
 						});
                         
-                    }, 1000);                            
+                    }, 500);                            
                     
-                }, 1000);
+                }, 500);
                 
                 
             }
         });
-    }, 1000);
+    }, 500);
 };
 function change_testcase_ui_on_delay(id,type,delay){
 										switch(type){

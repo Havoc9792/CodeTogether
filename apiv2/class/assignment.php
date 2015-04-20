@@ -207,9 +207,9 @@ class assignment extends mysql{
     public function generateTrainingData($assignment_id,$input,$expectedOutput){
 		if(isset($assignment_id)){
 			$path = "/var/www/html2/datamining/";
-			if(file_exists($path)){
-				$this->rrmdir($path);
-			}
+			//if(file_exists($path)){
+			//	$this->rrmdir($path);
+			//}
 			mkdir($path);
 			$sql = "SELECT DISTINCT(type) FROM assignment_testcase WHERE assignment_id = '{$assignment_id}'";
 			$result = $this->query($sql);
