@@ -309,6 +309,8 @@ class assignment extends mysql{
 				}
 				$content .= "}\n";
 				$content .= "@DATA\n";
+				$input .= "\n";
+						error_log("New Test Case Input : ".$input,0);
 			foreach($groupIDs as $groupID){
 					error_log("groupID : ".$groupID,0);
 				$path = "/var/www/html2/code";
@@ -322,6 +324,7 @@ class assignment extends mysql{
 					}
 				$mainClass = explode("/", $mainClass);
 				$mainClass = $mainClass[sizeof($mainClass)-1];
+				$expectedOutput = str_replace("\n", "", $expectedOutput);
 				$commandRun = "sh $path/testcase.sh '$folder' '$mainClass' '$input' '$expectedOutput' ";
 					$run = shell_exec($commandRun);
 					switch($run){
