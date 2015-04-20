@@ -2,7 +2,10 @@ $(function(){
 	$("a.btn").click(function(){
 		$(".overlay2").fadeIn();
 		var input = $("input").val();
-		$.getJSON("http://fyp2.mylife.hk/datamining/", {input: input, assignment_id: assignment_id}, function(res){
+		//alert(assignment_id);
+		$.getJSON("/datamining/", {input: input, assignment_id: assignment_id}, function(res){
+			console.log(res);
+			//$(".overlay2").fadeOut();
 			var content = "";
 			for(var i=0; i<res.length; i++){
 				content += "Label: " + res[i][0] + "<br />";
@@ -10,7 +13,7 @@ $(function(){
 			}			
 			$(".pro").html(content);
 			console.log(content, res);
-			$(".overlay2").fadeOut();
+			
 		});
 	});
 });
