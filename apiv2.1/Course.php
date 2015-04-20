@@ -86,7 +86,8 @@ class Course{
         if(user::isTeacher() ){
             //techer
 	        $db->join('course_teacher T', 'T.course_id = C.course_id', "LEFT");
-	        $db->where('T.teacher_id', $user_id);	       
+	        $db->where('T.teacher_id', $user_id);
+	        $db->where('C.course_id', $this->course_id);	       
 	        $row = $db->getOne("course C");           
         }else{
             //student
