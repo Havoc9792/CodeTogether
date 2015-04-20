@@ -68,7 +68,7 @@ class Java implements ProgrammingLanguage{
 		$output = file_get_contents($path . "/output.txt");	
 		echo json_encode(array('result' => "success", 'content' => $output));			
 		
-		rrmdir($path);
+		//rrmdir($path);
 		
 	}
 

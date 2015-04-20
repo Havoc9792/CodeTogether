@@ -211,6 +211,7 @@ class assignment extends mysql{
 			//	$this->rrmdir($path);
 			//}
 			//mkdir($path);
+			unlink($path."test.arff");
 			$sql = "SELECT DISTINCT(type) FROM assignment_testcase WHERE assignment_id = '{$assignment_id}'";
 			$result = $this->query($sql);
 			$types = array();
@@ -233,6 +234,7 @@ class assignment extends mysql{
 					$counter++;
 				}
 				$content = "";
+					$content .= "@RELATION testcase\n";
 				for($i = 1; $i <= $counter ; $i++){
 					$content .= "@ATTRIBUTE group" .$i. " REAL\n";
 				}
@@ -257,22 +259,21 @@ class assignment extends mysql{
 						$groupIDs[] = $row['group_id'];
 						$results[] = $row['result'];
 						$counter = 0;
-						foreach($groupIDs as $groupID){
-							switch($results[$counter]){
-								case "PASS":
+						switch($row['result']){
+							case "PASS":
 								$content .= "1,";
-								break;
-								case "FAIL":
+							break;
+							case "FAIL":
 								$content .= "0,";
-								break;
-								case "TIMEOUT":
+							break;
+							case "TIMEOUT":
 								$content .= "0.5,";
-								break;
-								default:
-								break;
-							}
-							$counter++;
+							break;
+							default:
+							break;
 						}
+						error_log("Test case ID : ".$testcase_id." Group : ".$row['group_id']." Result : ".$row['result'],0);
+							$counter++;
 						
 					}
 					$content .= $class;
@@ -293,7 +294,9 @@ class assignment extends mysql{
 	public function generateNewTestCase($assignment_id,$input,$groupIDs,$expectedOutput,$types){
 		if(isset($assignment_id)){
 			$path = "/var/www/html2/datamining/";
+			unlink($path."unlabeled.arff");
 				$content = "";
+					$content .= "@RELATION testcase\n";
 				for($i = 1; $i <= sizeof($groupIDs) ; $i++){
 					$content .= "@ATTRIBUTE group" .$i. " REAL\n";
 				}
@@ -307,6 +310,7 @@ class assignment extends mysql{
 				$content .= "}\n";
 				$content .= "@DATA\n";
 			foreach($groupIDs as $groupID){
+					error_log("groupID : ".$groupID,0);
 				$path = "/var/www/html2/code";
 				$folder = "/var/www/html2/code/".$groupID;
 				$command = "sh $path/mainClass.sh $folder";
@@ -334,15 +338,18 @@ class assignment extends mysql{
 							break;
 						
 					}
+						error_log("New Test Case Group : ".$groupID." Result : ".$run,0);
+				
+			}
 					$content .= "?\n";
 					$content .= "%\n";
 					$content .= "%\n";
 					$content .= "%\n";
+					$path = "/var/www/html2/datamining/";
 					$file = $path."unlabeled.arff";
 					$bool = file_put_contents($file,$content);
-					return $bool;
-				
-			}
+					error_log("unlabeled.arff PATH : ".$file,0);
+					error_log("generate new test case : ".$bool,0);
 			
 		}
 	}
