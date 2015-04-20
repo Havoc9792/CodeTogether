@@ -356,6 +356,89 @@ class assignment extends mysql{
 			
 		}
 	}
+	
+	public function testcaseRanking($assignment_id){
+		if(isset($assignment_id)){
+			$sql = "SELECT DISTINCT(type) FROM assignment_testcase WHERE assignment_id = '{$assignment_id}'";
+			$result = $this->query($sql);
+			$testcaseTypes = array();
+			//$testcaseIDs = array();
+			while($row = $result->fetch_assoc()){
+				$testcaseTypes[] = $row['type'];
+				//$testcaseIDs[] = $row['testcase_id'];
+			}
+			$rankingResult = array();
+			//each type in the assingment
+			foreach($testcaseTypes as $testcaseType){
+				$sql = "SELECT testcase_id FROM assignment_testcase WHERE type = '{$testcaseType}' AND assignment_id = '{$assignment_id}'";
+				$result = $this->query($sql);
+				$testcaseIDsForEachType = array();
+				//fetch test cases in a type
+				while($row = $result->fetch_assoc()){
+					$testcaseIDsForEachType[] = $row['testcase_id'];
+				}
+				$counterForEachType = 0;
+				$avgForEachType = 0;
+				//each testcase in a testcase type
+				foreach($testcaseIDsForEachType as $testcaseIDForEachType){
+					$sql = "SELECT DISTINCT(group_id) FROM testcase_data WHERE testcase_id = '{$testcaseIDForEachType}'";
+					$result = $this->query($sql);
+					$groupIDs = array();
+					while($row = $result->fetch_assoc()){
+						$groupIDs[] = $row['group_id'];
+					}
+					$groupAvg = 0;
+					$groupCounter = 0;
+					//each group of each testcase in a type
+					foreach($groupIDs as $groupID){
+						$sql = "SELECT * FROM testcase_data WHERE testcase_id = '{$testcaseIDForEachType}' AND group_id = '{$groupID}' LIMIT 0,100";
+						$result = $this->query($sql);
+						$counter = 0;
+						$avg = 0;
+						//fetch history of a group
+						while($row = $result->fetch_assoc()){
+							switch($row['result']){
+								case "PASS":
+									$avg += 1;
+								break;
+								case "FAIL":
+									$avg += 0;
+								break;
+								case "TIMEOUT":
+									$avg += 0.5;
+								break;
+								default:
+									$avg += 0;
+								break;
+							}
+							$counter++;
+							//end of loop of histories of a group
+						}
+						$avg = $avg / $counter;
+						$groupAvg += $avg;
+						$groupCounter++;
+					
+						//end of loop of each group
+					}
+					$groupAvg = $groupAvg / $groupCounter;
+					$avgForEachType += $groupAvg;
+					$counterForEachType++;
+						
+					//end of loop of a test case in a type
+				
+				}
+				$avgForEachType = $avgForEachType / $counterForEachType;
+				$avgForEachType *= 100;
+				$rankingResult[] = array('type' => $testcaseType,'passRate' => $avgForEachType);
+				
+				// end of loop of a type
+				
+			}
+			//end of loop of all type
+			return json_encode($rankingResult);
+			
+		}
+	}
     /*Depreciated
     public function testAssignment($group_id,$inputs){
 	    if(isset($group_id) && isset($inputs)){
