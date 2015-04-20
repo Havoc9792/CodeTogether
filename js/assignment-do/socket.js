@@ -11,7 +11,7 @@ socket.on('status', function (data) {
 socket.on("user join", function(data){
     console.log(data);
     if(typeof data.status_id !== "undefined" || data.status_id > 0){
-        //socket.emit("msg", {group_id: group_id, user_name: user_name, user_id: user_id, action: 'user-join'});                
+        socket.emit("msg", {group_id: group_id, user_name: user_name, user_id: user_id, action: 'user-join'});                
     }
 });
 
@@ -22,7 +22,7 @@ socket.on("user leave", function(data){
     if(typeof data.status_id !== "undefined" || data.status_id > 0){
         console.log(data.user_name);
         socket.emit('identify user', {group_id: group_id, name: user_name, user_id: user_id});
-        socket.emit("msg", {group_id: group_id, user_name: user_name, user_id: user_id, action: 'user-leave'});                
+        //socket.emit("msg", {group_id: group_id, user_name: user_name, user_id: user_id, action: 'user-leave'});                
     }
 });
 
@@ -74,7 +74,8 @@ socket.on("msg", function(data){
 		   	testcase_ui_load_all();
 	   		break;		   		   			   					   						   					   			       	
 	   case "testcase_ui_change_to":
-		   	testcase_ui_change_to(data.param.testcase_id, data.param.testcase_type);
+		   	//testcase_ui_change_to(data.param.testcase_id, data.param.testcase_type);
+		   	$('table tbody tr[data-testcase-id='+data.param.testcase_id+'] .indicator', $("#testcase-anly-content")).html(data.param.testcase_type);	
 	   		break;	
 	   case "function":
 	   		data.func;
