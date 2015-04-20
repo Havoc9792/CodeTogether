@@ -283,7 +283,7 @@ class assignment extends mysql{
 				$content .= "%\n";
 				$file = $path."test.arff";
 				$bool = file_put_contents($file,$content);
-				generateNewTestCase($assignment_id,$input,$groupIDs,$expectedOutput,$types);
+				$this->generateNewTestCase($assignment_id,$input,$groupIDs,$expectedOutput,$types);
 				
 			}
 		
