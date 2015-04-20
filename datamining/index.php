@@ -1,8 +1,7 @@
 <?php
 unlink("labeled.arff");
-
-$assignment_id = $_POST['assignment_id'];
-$input = $_POST['input'];
+$assignment_id = $_GET['assignment_id'];
+$input = $_GET['input'];
 /**
 Tino's		
 */

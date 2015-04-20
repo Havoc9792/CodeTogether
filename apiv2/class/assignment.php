@@ -210,7 +210,7 @@ class assignment extends mysql{
 			//if(file_exists($path)){
 			//	$this->rrmdir($path);
 			//}
-			mkdir($path);
+			//mkdir($path);
 			$sql = "SELECT DISTINCT(type) FROM assignment_testcase WHERE assignment_id = '{$assignment_id}'";
 			$result = $this->query($sql);
 			$types = array();
@@ -338,7 +338,7 @@ class assignment extends mysql{
 					$content .= "%\n";
 					$content .= "%\n";
 					$content .= "%\n";
-					$file = $path."labeled.arff";
+					$file = $path."unlabeled.arff";
 					$bool = file_put_contents($file,$content);
 					return $bool;
 				
