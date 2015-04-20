@@ -8,7 +8,8 @@ touch $2/runtime.txt
 touch $2/temp.txt
 touch $2/errorplaceholder.txt
 counter=1
-for c in $(cat $2/input.txt)
+#for c in $(cat $2/input.txt)
+while read c;
 do
 echo $c > $2/temp.txt
 echo $2/output.txt
@@ -20,4 +21,4 @@ then
 	
 fi
 counter=$((counter+1))
-done
+done < $2/input.txt

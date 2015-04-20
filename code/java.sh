@@ -15,7 +15,9 @@ touch $2/debug/errorplaceholder.txt
 counter=1
 if [ -s $2/input.txt ]
 then
-	for c in $(cat $2/input.txt)
+	#for c in $(cat $2/input.txt)
+	#echo "\n" >> $2/input.txt
+	while read c;
 	do
 		echo $c > $2/temp.txt
 		echo "Result for Test Case $counter with input(s) : $c \n" >> $2/output.txt
@@ -34,7 +36,7 @@ then
 			fi
 		fi
 		counter=$((counter+1))
-	done
+	done < $2/input.txt
 else
 	echo "Result for Test Case : \n" >> $2/output.txt
 	timeout 3s java -classpath $2 $file 1> $2/tempoutput.txt 2> $2/debug/errorplaceholder.txt

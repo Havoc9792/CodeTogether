@@ -40,6 +40,7 @@ class Java implements ProgrammingLanguage{
 		}
 		
 		//Find out main Class
+		$inputs .= "\n";
 		file_put_contents($path . "/input.txt", $inputs);
 		$command = "sh " . ROOT . "/inc/findMainClass.sh $path";
 		$output = shell_exec($command);

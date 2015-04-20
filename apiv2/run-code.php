@@ -11,6 +11,7 @@ $path = "/var/www/html2/code";
 //$folder = "/var/www/html/code/".$_REQUEST['folder'];
 
 $folder = "/var/www/html2/code/".$_POST['group_id'];
+$inputs .= "\n";
 file_put_contents($folder . "/input.txt", $inputs);
 $command = "sh $path/mainClass.sh $folder";
 //echo $command;
