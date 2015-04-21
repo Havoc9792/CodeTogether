@@ -6,6 +6,10 @@ $(function(){
 		$.getJSON("/datamining/", {input: input, assignment_id: assignment_id}, function(res){
 			console.log(res);
 			$(".overlay2").fadeOut();
+			if(typeof res.result !== "undefined"){
+				$(".pro").html(res.result);
+				return;
+			}			
 			var content = "";
 			for(var i=0; i<res.length; i++){
 				content += "Label: " + res[i][0] + "<br />";
