@@ -1,5 +1,5 @@
 $(function(){
-	$("a.btn").click(function(){
+	$("a.f").click(function(){
 		$(".overlay2").fadeIn();
 		var input = $("input").val();
 		//alert(assignment_id);
@@ -20,4 +20,23 @@ $(function(){
 			
 		});
 	});
+	
+	$("a.s").click(function(){
+		$(".overlay2").fadeIn();
+		var input = $("input").val();
+		//alert(assignment_id);
+		$.post("/apiv2/datamining-ranking.php", {assignment_id: assignment_id}, function(res){
+			console.log(res);
+			$(".overlay2").fadeOut();
+			res = jQuery.parseJSON(res);
+			var content = "";
+			for(var i=0; i<res.length; i++){
+				console.log(res);
+				content += "Testcase ID:" + res[i].id + " " + res[i].type + ": " + res[i].rate + "% <br />";		
+			}			
+			$(".pro2").html(content);
+			console.log(content, res);
+			
+		});
+	});	
 });

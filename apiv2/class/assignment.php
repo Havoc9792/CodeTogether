@@ -460,7 +460,14 @@ class assignment extends mysql{
 		return ($a['rate'] > $b['rate']) ? -1 : 1;
 	}
 			uasort($testcases, "cmp");
-			return json_encode($testcases);
+			$tt = array();
+			foreach($testcases as $t){
+				$tt[] = $t;
+			}
+			//var_dump($tt); die();
+			//die();
+			//var_dump($testcases); die();
+			return json_encode($tt);
 			
 		}
 	}

@@ -58,7 +58,7 @@ $course = $courseAPI->info();
 			<div class="panel panel-default">
 					<div class="panel-heading">
 						<div class="panel-title">
-						Testcase Data Mining
+						Testcase Classification
 						</div>	
 					</div>
 					<div class="panel-body">
@@ -70,7 +70,7 @@ $course = $courseAPI->info();
 	                          	</div>												
 							</div>	
 							<div class="col-md-4">								
-		                        <a href="#" class="btn btn-primary btn-block btn-lg" style="margin-top: 6px;">Start Mining</a>	                          													
+		                        <a href="#" class="f btn btn-primary btn-block btn-lg" style="margin-top: 6px;">Start Mining</a>	                          													
 							</div>																																																				
 						</div>
 						<div class="row">
@@ -82,6 +82,31 @@ $course = $courseAPI->info();
 	            </div>				
 				
 			</div>
+			
+			<div class="panel panel-default">
+					<div class="panel-heading">
+						<div class="panel-title">
+						Testcase Ranking
+						</div>	
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-8 pro2">
+																					
+							</div>	
+							<div class="col-md-4">								
+		                        <a href="#" class="s btn btn-primary btn-block btn-lg" style="margin-top: 6px;">Start Mining</a>                          													
+							</div>																																																				
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								
+							</div>
+						</div>
+	              	</div>
+	            </div>				
+				
+			</div>			
 		
 		
 		<!-- END PLACE PAGE CONTENT HERE -->
