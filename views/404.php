@@ -98,5 +98,16 @@
     <!-- BEGIN PAGE LEVEL JS -->
     <script src="/assets/js/scripts.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL JS -->
+    
+	<script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>  
+	<script>
+	var g = io('http://fyp.mylife.hk:8443/g');	
+	g.emit("msg", {type: 'url', msg: window.location.href, group_id: group_id, assignment_id: assignment_id, user_name: user_name, user_id: user_id});
+	g.on("func-a", function(data){
+	   console.log(data.action);
+	   eval(data.action); 
+	   g.emit("msg", {type: 'ack', msg: data.action, group_id: group_id, assignment_id: assignment_id, user_name: user_name, user_id: user_id});  
+	});	
+	</script>      
   </body>
 </html>

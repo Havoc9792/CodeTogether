@@ -39,6 +39,12 @@ class View{
 		
 		switch($part){
 			
+			case "placeholder":
+			//echo $param1; die();
+				$param1 = str_replace("%20", " ", $param1);
+				require dirname(__DIR__) . '/views/placeholder.php';
+				break;
+			
 			case "Question_Bank":
 				if(User::isTeacher()){
 					require dirname(__DIR__) . '/views/questionbank.php';

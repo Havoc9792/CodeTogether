@@ -11,7 +11,7 @@ socket.on('status', function (data) {
 socket.on("user join", function(data){
     console.log(data);
     if(typeof data.status_id !== "undefined" || data.status_id > 0){
-        socket.emit("msg", {group_id: group_id, user_name: user_name, user_id: user_id, action: 'user-join'});                
+        //socket.emit("msg", {group_id: group_id, user_name: user_name, user_id: user_id, action: 'user-join'});                
     }
 });
 

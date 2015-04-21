@@ -45,6 +45,8 @@ $router->map('GET', '/assignment/do/[i:assignment_id]/', 'View::render#Assignmen
 //Drawing
 $router->map('GET', '/drawing/[i:drawing_id]/', 'View::drawing', 'drawing');
 
+$router->map("GET", '/placeholder/[:text]/', 'View::render#placeholder', 'placeholder');
+
 
 
 
