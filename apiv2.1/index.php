@@ -19,7 +19,7 @@ $router->map('POST', '/login/', 'User::login');
 $router->map('POST|GET', '/logout/', 'User::logout');
 
 
-$router->map('POST|GET', '/compileAndRun/[i:assignment_id]/[a:inputs]/', 'Java::compileAndRun');
+$router->map('POST|GET', '/compileAndRun/[i:assignment_id]/[:inputs]/', 'Java::compileAndRun');
 
 $router->map('POST', '/testcase/[i:assignment_id]/[save|delete:action]/[i:testcase_id]?/', 'Testcase::manage');
 $router->map('GET', '/testcase/[i:assignment_id]/', 'Testcase::get');
