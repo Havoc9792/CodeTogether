@@ -10,11 +10,11 @@ class Java implements ProgrammingLanguage{
 	
 	public function compileAndRun($assignment_id, $inputs){
 		global $db;
-		
+		$inputs = str_replace("%20"," ", $inputs);
 		//Create Temp Folder
 		$temp_folder = rand() . rand();
 		$temp_folder = "123";		
-		
+		error_log("teacher java inputs : ".$inputs. " assignment id : ".$assignment_id);
 		$path = ROOT . "/tmp/" . $temp_folder;	
 		rrmdir($path);										
 		mkdir($path);
@@ -68,7 +68,7 @@ class Java implements ProgrammingLanguage{
 		$output = file_get_contents($path . "/output.txt");	
 		echo json_encode(array('result' => "success", 'content' => $output));			
 		
-		rrmdir($path);
+		//rrmdir($path);
 		
 	}
 

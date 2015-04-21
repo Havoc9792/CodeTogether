@@ -251,7 +251,7 @@ class assignment extends mysql{
 				foreach($data as $testcase){
 					$class = $testcase['type'];
 					$testcase_id = $testcase['testcase_id'];
-					$sql = "SELECT MAX(data_id),group_id,result FROM testcase_data WHERE testcase_id = '{$testcase_id}' GROUP BY group_id ORDER BY data_id DESC";
+					$sql = "SELECT MAX(data_id),group_id,result FROM testcase_data WHERE testcase_id = '{$testcase_id}' GROUP BY group_id ORDER BY group_id ASC";
 					$result = $this->query($sql);
 					$groupIDs = array();
 					$results = array();
@@ -361,27 +361,29 @@ class assignment extends mysql{
 		if(isset($assignment_id)){
 			$sql = "SELECT DISTINCT(type) FROM assignment_testcase WHERE assignment_id = '{$assignment_id}'";
 			$result = $this->query($sql);
-			$testcaseTypes = array();
+			$testcases = array();
 			//$testcaseIDs = array();
 			while($row = $result->fetch_assoc()){
 				$testcaseTypes[] = $row['type'];
 				//$testcaseIDs[] = $row['testcase_id'];
 			}
-			$rankingResult = array();
+			//$rankingResult = array();
 			//each type in the assingment
-			foreach($testcaseTypes as $testcaseType){
-				$sql = "SELECT testcase_id FROM assignment_testcase WHERE type = '{$testcaseType}' AND assignment_id = '{$assignment_id}'";
+			//foreach($testcaseTypes as $testcaseType){
+				$sql = "SELECT * FROM assignment_testcase WHERE assignment_id = '{$assignment_id}'";
 				$result = $this->query($sql);
-				$testcaseIDsForEachType = array();
+				//$testcaseIDsForEachType = array();
 				//fetch test cases in a type
 				while($row = $result->fetch_assoc()){
-					$testcaseIDsForEachType[] = $row['testcase_id'];
+					//$testcaseIDsForEachType[] = $row['testcase_id'];
+					$testcases[] = array('id'=>$row['testcase_id'],'type'=>$row['type'],'rate'=>"0");
 				}
-				$counterForEachType = 0;
-				$avgForEachType = 0;
-				//each testcase in a testcase type
-				foreach($testcaseIDsForEachType as $testcaseIDForEachType){
-					$sql = "SELECT DISTINCT(group_id) FROM testcase_data WHERE testcase_id = '{$testcaseIDForEachType}'";
+				//$counterForEachType = 0;
+				//$avgForEachType = 0;
+				
+				//each testcase
+				foreach($testcases as &$testcase){
+					$sql = "SELECT DISTINCT(group_id) FROM testcase_data WHERE testcase_id = '{$testcase['id']}' ORDER BY group_id ASC";
 					$result = $this->query($sql);
 					$groupIDs = array();
 					while($row = $result->fetch_assoc()){
@@ -389,53 +391,76 @@ class assignment extends mysql{
 					}
 					$groupAvg = 0;
 					$groupCounter = 0;
-					//each group of each testcase in a type
+					//each group of each testcase
 					foreach($groupIDs as $groupID){
-						$sql = "SELECT * FROM testcase_data WHERE testcase_id = '{$testcaseIDForEachType}' AND group_id = '{$groupID}' LIMIT 0,100";
+						$sql = "SELECT * FROM testcase_data WHERE testcase_id = '{$testcase['id']}' AND group_id = '{$groupID}' ORDER BY data_id ASC LIMIT 0,100";
 						$result = $this->query($sql);
 						$counter = 0;
 						$avg = 0;
+						$firstPassAt = null;
 						//fetch history of a group
 						while($row = $result->fetch_assoc()){
 							switch($row['result']){
 								case "PASS":
-									$avg += 1;
+									if($firstPassAt == null){
+										$firstPassAt = ($counter + 1);
+										error_log("first pass at ".$firstPassAt);
+										}
+									//$avg += 1;
 								break;
 								case "FAIL":
-									$avg += 0;
+									//$avg += 0;
 								break;
 								case "TIMEOUT":
-									$avg += 0.5;
+									//$avg += 0.5;
 								break;
 								default:
-									$avg += 0;
+									//$avg += 0;
 								break;
 							}
 							$counter++;
 							//end of loop of histories of a group
 						}
-						$avg = $avg / $counter;
-						$groupAvg += $avg;
+						if($firstPassAt == null){
+							$firstPassAt = "null";
+							//error_log("first pass is null!! ");
+						}else{
+							$firstPassAt = ($firstPassAt - 1) / $counter;
+							$firstPassAt = 100 - $firstPassAt * 100;
+							//percent of successful attempt
+							$groupAvg += $firstPassAt;
+						}
+						//$avg = $avg / $counter;
+						//$groupAvg += $avg;
 						$groupCounter++;
+							error_log("group : ".$groupID." testcase : ".$testcase['id']." % of success attempt : ".$firstPassAt." counter : ".$counter);
 					
 						//end of loop of each group
 					}
 					$groupAvg = $groupAvg / $groupCounter;
-					$avgForEachType += $groupAvg;
-					$counterForEachType++;
+					$testcase['rate'] = $groupAvg;
+					//$avgForEachType += $groupAvg;
+					//$counterForEachType++;
 						
-					//end of loop of a test case in a type
+					//end of loop of a test case
 				
 				}
-				$avgForEachType = $avgForEachType / $counterForEachType;
-				$avgForEachType *= 100;
-				$rankingResult[] = array('type' => $testcaseType,'passRate' => $avgForEachType);
+				//$avgForEachType = $avgForEachType / $counterForEachType;
+				//$avgForEachType *= 100;
+				//$rankingResult[] = array('type' => $testcaseType,'passRate' => $avgForEachType);
 				
 				// end of loop of a type
 				
-			}
+			//}
 			//end of loop of all type
-			return json_encode($rankingResult);
+	function cmp($a,$b){
+		if($a['rate'] == $b['rate']){
+			return 0;
+		}
+		return ($a['rate'] > $b['rate']) ? -1 : 1;
+	}
+			uasort($testcases, "cmp");
+			return json_encode($testcases);
 			
 		}
 	}
